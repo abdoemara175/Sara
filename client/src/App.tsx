@@ -10,17 +10,11 @@ const ProductDetail = lazy(() => import("./pages/ProductDetail"));
 const Shop = lazy(() => import("./pages/Shop"));
 const Account = lazy(() => import("./pages/Account"));
 const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
+const NouraOperations = lazy(() => import("./pages/NouraOperations"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 function RouteLoadingState() {
-  return (
-    <main className="min-h-screen bg-[#fcfbf8] px-6 py-16 text-[#211d1a]">
-      <div className="mx-auto max-w-xl rounded-[2rem] border border-[#e4ddd4] bg-white px-8 py-12 text-center shadow-sm">
-        <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#a76c45]">NOURA</p>
-        <p className="mt-3 font-serif text-2xl">Preparing your beauty edit…</p>
-      </div>
-    </main>
-  );
+  return <main className="min-h-screen bg-[#fcfdf9] px-6 py-16 text-[#3e5128]"><div className="mx-auto max-w-xl rounded-2xl border border-[#d9dfc4] bg-white px-8 py-12 text-center shadow-sm"><p className="noura-eyebrow">NOURA</p><p className="noura-display mt-3 text-3xl font-bold">Preparing your beauty edit…</p></div></main>;
 }
 
 function ProductRoute() {
@@ -29,7 +23,7 @@ function ProductRoute() {
 }
 
 function Router() {
-  return <Suspense fallback={<RouteLoadingState />}><Switch><Route path="/" component={Home} /><Route path="/shop" component={Shop} /><Route path="/account" component={Account} /><Route path="/admin" component={AdminDashboard} /><Route path="/product/:handle" component={ProductRoute} /><Route path="/404" component={NotFound} /><Route component={NotFound} /></Switch></Suspense>;
+  return <Suspense fallback={<RouteLoadingState />}><Switch><Route path="/" component={Home} /><Route path="/shop" component={Shop} /><Route path="/account" component={Account} /><Route path="/admin" component={AdminDashboard} /><Route path="/operations" component={NouraOperations} /><Route path="/product/:handle" component={ProductRoute} /><Route path="/404" component={NotFound} /><Route component={NotFound} /></Switch></Suspense>;
 }
 
 export default function App() {

@@ -70,7 +70,7 @@ export function StoreHeader() {
           <a href="/#featured">Featured</a>
           <a href="/#about">About</a>
           <Link href="/account" className={location.startsWith("/account") ? "text-[#4f744c]" : "hover:text-[#4f744c]"}>Account</Link>
-          {user?.role === "admin" && !user?.requiresPasswordChange && <Link href="/admin" className="text-[#4f744c]">Admin</Link>}
+          {user?.role === "admin" && !user?.requiresPasswordChange && <><Link href="/admin" className="text-[#4f744c]">Admin</Link><Link href="/operations" className={location.startsWith("/operations") ? "text-[#4f744c]" : "hover:text-[#4f744c]"}>Operations</Link></>}
         </nav>
         <div className="relative hidden min-w-0 max-w-md flex-1 lg:block">
           <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[#4f744c]" size={17} />

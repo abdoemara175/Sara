@@ -20,6 +20,10 @@ The shared navigation now preserves every category in a horizontally scrollable 
 
 Desktop and mobile checks confirmed that the discovery, category, product, and account layouts retain their hierarchy at the updated breakpoints. Loading-state screenshots intentionally capture the first frame before each independent live catalogue request resolves; live Shopify and UI acceptance tests continue to confirm the catalogue data and eleven category routes.
 
+The first capture of the newly lazy-loaded NOURA Operations route showed only the route-loading frame. The route is being checked separately after module loading before visual sign-off; this observation is not treated as a completed operations-panel verification.
+
+The subsequent unauthenticated checks for both `/operations` and `/admin` render clear NOURA-branded local-account sign-in guidance rather than forwarding to the generic OAuth gateway. The protected operational surface is therefore unavailable to visitors without revealing store data or creating an authentication dead end.
+
 ## Guardrails
 
 All refinements must retain the live Shopify catalogue, cart, checkout handoff, account security, category routes, and server-enforced administration. No customer reviews, ratings, testimonials, discount codes, or unverified commercial claims will be added.

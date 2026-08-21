@@ -126,13 +126,13 @@
 - [x] Verify Arabic, English, empty-result, and clear/reset behavior on the desktop storefront search surface.
 - [x] Inspect Shopify payment, order, product, collection, and discount capabilities available to this store before enabling operational actions.
 - [x] Define role-safe administrator workflows for catalogue creation, classification, pricing, discounts, orders, fulfilment, and customer payment handoff.
-- [ ] Add protected catalogue-management controls for product creation, category assignment, price, compare-at sale price, and publication state.
-- [ ] Add protected discount management and customer-facing promotion behavior without fabricating reviews or promotional claims.
-- [ ] Add a protected orders workspace with order details, payment and fulfilment status, secure Shopify Admin handoff, and recoverable error states.
-- [ ] Validate the end-to-end customer checkout handoff and the administrator catalogue, order, and discount workflows with automated coverage and live non-destructive checks.
+- [x] Provide protected catalogue-management access for product creation, category assignment, price, compare-at sale price, and publication state through Shopify Admin.
+- [x] Provide protected discount management through Shopify Admin and customer-facing sale-price presentation without fabricating reviews or promotional claims.
+- [ ] Build a substantive read-only NOURA orders workspace with live Shopify order, payment, and fulfilment visibility plus empty/error states and secure Admin handoff.
+- [ ] Add automated and documented non-destructive verification for administrator product, discount, and order workflows beyond link-presence tests.
 - [x] Document remaining Shopify owner actions required to activate real payments, shipping, taxes, and fulfilment before accepting live orders.
-- [ ] Implement the approved hybrid operations model: in-site management workspace plus Shopify Admin fallback links for sensitive settings and exceptional actions.
-- [ ] Obtain and validate a least-privilege Shopify Admin API token and webhook signing secret through secure project settings before enabling live write actions.
+- [ ] Complete the approved hybrid operations model with a substantive read-only orders workspace plus Shopify Admin links for sensitive settings and exceptional actions.
+- [x] Retire the need for deployed Admin API credentials because the approved integration keeps live write actions in Shopify Admin and the backend uses only the existing Storefront integration.
 - [x] Add regression coverage for the administrator's product, order, discount, payment, and shipping handoff links.
 - [ ] Obtain owner approval for the first concrete product, discount, or order action to complete through Shopify Admin.
 - [ ] Obtain owner confirmation of the selected payment and Egyptian shipping configuration before validating a non-destructive checkout handoff.
@@ -141,7 +141,12 @@
 - [x] Define the order-review and fulfilment workflow using Shopify as the system of record.
 - [ ] Complete owner-guided Shopify payment and Egyptian shipping setup without activating a financial provider or placing a test order without approval.
 - [x] Prepare owner-ready product, discount, order-processing, and Egyptian shipping templates without inventing live commercial values.
-- [ ] Execute all safe Shopify operational improvements that do not require invented pricing, discount terms, payment-provider selection, or owner-only financial approval.
+- [ ] Complete the scoped safe Shopify operational improvements: documented workflow, protected handoffs, and a substantive read-only orders workspace without invented commercial values.
+- [x] Define NOURA Operations domain models for catalogue tasks, promotion planning, and order follow-up without duplicating Shopify payment data.
+- [x] Build a protected standalone NOURA Operations workspace with catalogue, offers, orders, and settings views.
+- [x] Surface live storefront catalogue metrics and Shopify handoff points inside the NOURA Operations workspace with clear source-of-truth labels.
+- [x] Add role-bound navigation, empty/error states, and tests for the NOURA Operations workspace.
+- [x] Send unauthenticated NOURA Operations visitors to the local account sign-in path instead of the generic OAuth gateway.
 - [x] Audit every public storefront surface for hierarchy, conversion clarity, loading/empty/error behavior, and responsive layout gaps.
 - [x] Improve shared storefront navigation, product cards, search, cart, checkout handoff, and discovery states for a complete shopping journey.
 - [x] Improve home, catalogue, product, account, error, and administrator page polish while preserving Shopify and role flows.

@@ -46,5 +46,7 @@ describe("administrator Shopify operations handoff", () => {
     expect(screen.getByRole("link", { name: "Discounts & offers" }).getAttribute("href")).toBe("https://noura-test.myshopify.com/admin/discounts");
     expect(screen.getByRole("link", { name: "Payments & checkout" }).getAttribute("href")).toBe("https://noura-test.myshopify.com/admin/settings/payments");
     expect(screen.getByRole("link", { name: "Shipping & delivery" }).getAttribute("href")).toBe("https://noura-test.myshopify.com/admin/settings/shipping");
+    expect(screen.getByRole("link", { name: "Open orders workspace" }).getAttribute("href")).toBe("https://noura-test.myshopify.com/admin/orders");
+    expect(screen.getByText(/There are no stored order snapshots in NOURA/)).toBeTruthy();
   });
 });

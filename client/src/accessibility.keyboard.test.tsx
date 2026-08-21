@@ -84,7 +84,7 @@ describe("real storefront keyboard navigation", () => {
     expect(filterProductsByCategory(products, null)).toHaveLength(2);
   });
 
-  it("moves from the live search field to the cart trigger and exposes the protected Admin link", async () => {
+  it("moves from the live search field to the cart trigger and exposes protected Admin and Operations links", async () => {
     const user = userEvent.setup();
     render(<StoreHeader />);
 
@@ -94,6 +94,7 @@ describe("real storefront keyboard navigation", () => {
 
     expect(document.activeElement).toBe(screen.getByRole("button", { name: "Open cart" }));
     expect(screen.getByRole("link", { name: "Admin" }).getAttribute("href")).toBe("/admin");
+    expect(screen.getByRole("link", { name: "Operations" }).getAttribute("href")).toBe("/operations");
   });
 
   it("renders Arabic and English desktop search results, recovers from no matches, and returns to idle when cleared", async () => {

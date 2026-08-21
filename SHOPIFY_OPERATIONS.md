@@ -6,9 +6,29 @@ NOURA uses Shopify as the source of truth for checkout, payments, orders, fulfil
 
 The protected NOURA administrator area provides the operational overview, authenticated user administration, catalogue visibility, and direct, role-safe paths to the relevant Shopify Admin surfaces. Product, discount, order, payment, and fulfilment mutations remain in Shopify Admin until an owner-approved server integration is provisioned.
 
+## NOURA Operations workspace
+
+The separate **NOURA Operations** workspace is available at `/operations` to a signed-in administrator with an updated password. It provides four operational views without copying customer payment or order data into NOURA:
+
+| View | Data and purpose | Operational source |
+| --- | --- | --- |
+| Overview | Live catalogue metrics and clear next actions | NOURA read-only storefront overview |
+| Catalogue | Published products visible to the storefront, with a protected handoff to edit the record | Shopify Admin |
+| Offers | Promotion-planning checklist and a protected handoff to create the enforceable offer | Shopify Admin |
+| Orders | Follow-up workflow with an explicit statement that no order snapshot is copied locally | Shopify Admin |
+| Settings | Payment and Egyptian shipping setup handoffs | Shopify Admin |
+
+The workspace is intentionally not a substitute for Shopify order, payment, or fulfilment records. It presents the operational journey while preserving Shopify as the live source of truth.
+
 ## Read-only operating baseline — 21 August 2026
 
 The live catalogue contains **11 active products**, covering each established NOURA category once. The store currently has **no discount codes** and **no orders visible to the Manus sales channel**. Payment and shipping readiness must be reviewed by the owner from the protected Shopify Admin settings; those financial settings are deliberately not exposed through the storefront or this runbook.
+
+## Non-destructive verification — 21 August 2026
+
+The Shopify management connection was checked without creating, editing, fulfilling, refunding, or deleting any record. The active-product query returned the same eleven published products across the established catalogue categories. The active-discount query returned no records, and the sales-channel order query returned no records.
+
+The protected NOURA administrator interface was also regression-tested for catalogue, discount, payment, shipping, order, and dedicated orders-workspace handoffs. The orders workspace deliberately states that it does not hold copied order snapshots; this avoids presenting stale payment or fulfilment information as live data. Shopify Admin remains the order, payment, and fulfilment record of truth.
 
 ## Administrator workflow
 
@@ -96,4 +116,3 @@ Discount codes stay private to Shopify checkout. They are not rendered, hinted a
 | Delivery estimate | `________________` |
 | Fulfilment address / location | `________________` |
 | Return and exchange policy | `________________` |
-***
