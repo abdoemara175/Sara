@@ -16,8 +16,10 @@
 - [x] Seed only the minimum original products needed to validate the initial storefront preview.
 - [x] Verify that the live Shopify Storefront catalog is readable before building data-driven storefront views.
 - [ ] Document the Shopify ownership handoff and validate that checkout opens without a payment-configuration blocker.
+- [x] Document the Shopify ownership handoff in SHOPIFY_HANDOFF.md.
 - [x] Add a true product-image gallery and validate variant-selector behavior with a multi-variant product.
 - [ ] Document that AI discovery uses the active Shopify catalog and validate taxonomy coverage as products are added to all 11 categories.
+- [x] Document the active-catalogue AI discovery model and required 11-category taxonomy in CATALOG_SETUP.md.
 - [x] Run a production build and conduct keyboard/focus accessibility checks for navigation, search, PDP, and cart drawer.
 - [ ] Re-verify the multi-variant Velvet Blush Duo page in the browser after Shopify connectivity stabilizes, including gallery thumbnails and shade selection.
 - [ ] Perform and document explicit keyboard/focus checks for header navigation, AI-search suggestions, product controls, and cart drawer controls.
