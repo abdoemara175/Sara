@@ -146,6 +146,7 @@
 - [x] Improve shared storefront navigation, product cards, search, cart, checkout handoff, and discovery states for a complete shopping journey.
 - [x] Improve home, catalogue, product, account, error, and administrator page polish while preserving Shopify and role flows.
 - [x] Add or update interface regression tests and complete desktop, tablet, and mobile visual verification for the refined frontend.
+- [x] Align the 404 recovery screen with the shared botanical tokens and display treatment without breaking its return-home path.
 - [x] Define a calm botanical skincare visual system inspired by the supplied reference without copying its brand assets or copy.
 - [x] Replace the current NOURA color, typography, button, card, and spacing tokens with the new olive-and-ivory system.
 - [x] Restyle the storefront, product discovery, account, cart, and administrator views while preserving existing commerce and role flows.
