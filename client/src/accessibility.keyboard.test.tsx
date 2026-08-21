@@ -3,7 +3,8 @@ import React from "react";
 import { cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { CartDrawer, StoreHeader } from "./components/storefront";
+import { CartDrawer, shopHref, StoreHeader } from "./components/storefront";
+import { categoryFromSearch } from "./pages/Shop";
 
 const cartState = vi.fn();
 const authState = vi.fn();
@@ -45,6 +46,19 @@ afterEach(() => {
 });
 
 describe("real storefront keyboard navigation", () => {
+  it("keeps category discovery and the empty-bag recovery action on explicit shop routes", () => {
+    render(<StoreHeader />);
+    expect(shopHref("Skin Care")).toBe("/shop?category=Skin%20Care");
+    expect(categoryFromSearch("?category=Skin%20Care")).toBe("Skin Care");
+    expect(categoryFromSearch("?category=Unknown")).toBeNull();
+    expect(screen.getAllByRole("link", { name: "Skin Care" }).some(link => link.getAttribute("href") === "/shop?category=Skin%20Care")).toBe(true);
+
+    cleanup();
+    cartState.mockReturnValue({ cart: null, isOpen: true, loading: false, itemCount: 0, ...actions });
+    render(<CartDrawer />);
+    expect(screen.getByRole("link", { name: "Browse the edit" }).getAttribute("href")).toBe("/shop");
+  });
+
   it("moves from the live search field to the cart trigger and exposes the protected Admin link", async () => {
     const user = userEvent.setup();
     render(<StoreHeader />);
@@ -55,6 +69,25 @@ describe("real storefront keyboard navigation", () => {
 
     expect(document.activeElement).toBe(screen.getByRole("button", { name: "Open cart" }));
     expect(screen.getByRole("link", { name: "Admin" }).getAttribute("href")).toBe("/admin");
+  });
+
+  it("does not expose an administrator shortcut before a temporary password is changed", () => {
+    authState.mockReturnValue({ user: { role: "admin", requiresPasswordChange: true } });
+    render(<StoreHeader />);
+    expect(screen.queryByRole("link", { name: "Admin" })).toBeNull();
+  });
+
+  it("opens the mobile navigation with account and category journey links", async () => {
+    const user = userEvent.setup();
+    render(<StoreHeader />);
+    const trigger = screen.getByRole("button", { name: "Open navigation" });
+    await user.click(trigger);
+
+    expect(screen.getByRole("button", { name: "Close navigation" }).getAttribute("aria-expanded")).toBe("true");
+    const mobileNavigation = document.getElementById("mobile-store-navigation");
+    expect(mobileNavigation).toBeTruthy();
+    expect(mobileNavigation?.querySelector('a[href="/account"]')).toBeTruthy();
+    expect(mobileNavigation?.querySelector('a[href="/shop?category=Skin%20Care"]')).toBeTruthy();
   });
 
   it("keeps the live cart drawer close, quantity, removal, and checkout controls reachable by Tab", async () => {

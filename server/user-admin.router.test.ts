@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { appRouter } from "./routers";
 import * as db from "./db";
 import type { TrpcContext } from "./_core/context";
+import { verifyPassword } from "./localAuth";
 
 function adminContext(user: NonNullable<TrpcContext["user"]>): TrpcContext {
   return {
@@ -27,6 +28,15 @@ describe("administrator user management", () => {
       await expect(lastAdminCaller.userAdmin.setRole({ userId: owner!.id, role: "user" })).rejects.toMatchObject({ code: "BAD_REQUEST" });
       await caller.userAdmin.setRole({ userId: created!.id, role: "admin" });
       expect((await db.getUserById(created!.id))?.role).toBe("admin");
+      await caller.userAdmin.setActive({ userId: created!.id, isActive: false });
+      expect((await db.getUserById(created!.id))?.isActive).toBe(false);
+      await caller.userAdmin.setActive({ userId: created!.id, isActive: true });
+      await caller.userAdmin.resetPassword({ userId: created!.id, password: "ReplacementPass456" });
+      const resetMember = await db.getUserById(created!.id);
+      expect(resetMember?.mustChangePassword).toBe(true);
+      expect(await verifyPassword("ReplacementPass456", resetMember?.passwordHash)).toBe(true);
+      await caller.userAdmin.delete({ userId: created!.id });
+      expect(await db.getUserById(created!.id)).toBeUndefined();
     } finally {
       const created = await db.getUserByEmail(email);
       if (created) await db.deleteUser(created.id);

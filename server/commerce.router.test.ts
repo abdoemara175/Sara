@@ -14,6 +14,13 @@ function makeCtx(user: AuthenticatedUser | null = null): TrpcContext {
 }
 
 const fetchMock = vi.fn();
+const originalShopifyDomain = process.env.SHOPIFY_STORE_DOMAIN;
+const originalStorefrontToken = process.env.SHOPIFY_STOREFRONT_API_ACCESS_TOKEN;
+
+function restoreEnv(name: "SHOPIFY_STORE_DOMAIN" | "SHOPIFY_STOREFRONT_API_ACCESS_TOKEN", value: string | undefined) {
+  if (value === undefined) delete process.env[name];
+  else process.env[name] = value;
+}
 
 beforeEach(() => {
   fetchMock.mockReset();
@@ -24,6 +31,8 @@ beforeEach(() => {
 
 afterEach(() => {
   vi.unstubAllGlobals();
+  restoreEnv("SHOPIFY_STORE_DOMAIN", originalShopifyDomain);
+  restoreEnv("SHOPIFY_STOREFRONT_API_ACCESS_TOKEN", originalStorefrontToken);
 });
 
 function ok(data: unknown) {

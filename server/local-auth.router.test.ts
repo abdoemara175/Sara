@@ -59,6 +59,38 @@ describe("local administrator authentication", () => {
     expect(await verifyPassword("different-password", encoded)).toBe(false);
   });
 
+  it("rotates the local session on password change and rejects the old token", async () => {
+    const email = `rotation-${crypto.randomUUID()}@example.test`;
+    const initialPassword = "InitialPass123";
+    const nextPassword = "UpdatedPass456";
+    try {
+      const created = await db.createLocalUser({ email, password: initialPassword, role: "user" });
+      await db.updateLocalPassword(created!.id, await hashPassword(initialPassword), false);
+
+      const signInContext = makeContext();
+      await appRouter.createCaller(signInContext).localAuth.signIn({ email, password: initialPassword });
+      const [, oldToken] = signInContext.cookies[0] as [string, string];
+      const oldRequest = { headers: { cookie: `${COOKIE_NAME}=${oldToken}` } } as Parameters<typeof sdk.authenticateRequest>[0];
+      const authenticatedUser = await sdk.authenticateRequest(oldRequest);
+
+      const changeContext = makeContext(authenticatedUser);
+      await appRouter.createCaller(changeContext).localAuth.changePassword({ currentPassword: initialPassword, newPassword: nextPassword });
+      const [cookieName, newToken] = changeContext.cookies[0] as [string, string];
+      expect(cookieName).toBe(COOKIE_NAME);
+      expect(newToken).not.toBe(oldToken);
+      await expect(sdk.authenticateRequest(oldRequest)).rejects.toThrow();
+
+      const newRequest = { headers: { cookie: `${COOKIE_NAME}=${newToken}` } } as Parameters<typeof sdk.authenticateRequest>[0];
+      const refreshedUser = await sdk.authenticateRequest(newRequest);
+      expect(refreshedUser.email).toBe(email);
+      expect(refreshedUser.mustChangePassword).toBe(false);
+      expect(await verifyPassword(nextPassword, (await db.getUserByEmail(email))?.passwordHash)).toBe(true);
+    } finally {
+      const stored = await db.getUserByEmail(email);
+      if (stored) await db.deleteUser(stored.id);
+    }
+  }, 20_000);
+
   it("accepts the issued local session before sign-out then rejects that exact token after server-side revocation", async () => {
     const email = `session-admin-${crypto.randomUUID()}@example.test`;
     const password = "SessionAdminPass123";

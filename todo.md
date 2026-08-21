@@ -64,3 +64,33 @@
 - [x] Sanitize client-facing authentication responses to exclude password hashes, session versions, lockout counters, and other server-only authentication metadata.
 - [x] Add regression coverage proving authentication responses do not disclose server-only credential metadata.
 - [x] Isolate session-revocation tests from the operational administrator account so test execution cannot alter its password state.
+- [x] Audit the shared NOURA design tokens, typography, spacing, interaction states, and component variants for consistency.
+- [x] Review the storefront journey across discovery, category browsing, product detail, cart, account, and Shopify checkout handoff.
+- [x] Verify and improve responsive layouts at desktop, tablet, and mobile breakpoints, including navigation and cart interactions.
+- [x] Add or refine UX states for loading, empty catalogues, errors, and checkout handoff where gaps are identified.
+- [x] Add regression coverage for any changed responsive or journey-critical interaction.
+- [x] Fix category filter URL parsing and verify a selected category limits the product grid correctly.
+- [x] Complete final UX/UI review for storefront discovery, product selection, cart, account, and checkout handoff.
+- [x] Prepare a deployment guide that distinguishes the full-stack runtime from GitHub Pages static-hosting limitations.
+- [ ] Synchronize the complete source code and operating documentation to the GitHub repository abdoemara175/Sara.
+- [ ] Inspect GitHub Pages configuration and confirm the compatible publishing approach without representing the static host as a full-stack deployment.
+- [x] Defer GitHub synchronization and GitHub Pages publishing until the owner explicitly confirms the final upload.
+- [x] Validate the cart management and checkout handoff with live Storefront cart operations and application-state regression coverage after connected-browser interaction timed out.
+- [x] Verify the updated storefront on a tablet viewport, including navigation, category filtering, product detail layout, and cart drawer behavior covered by regression tests.
+- [x] Add regression coverage for mobile navigation and the product-to-cart journey.
+- [x] Document and test the visitor, customer, temporary-password, administrator, and disabled-account flow matrix.
+- [x] Verify the session lifecycle across sign-in, password change, sign-out, token revocation, and disabled-user access.
+- [x] Verify role boundaries for anonymous, customer, and administrator procedures and UI entry points.
+- [x] Exercise the full commerce journey from category discovery through product selection, cart updates, and checkout handoff.
+- [x] Rotate the current session after a password change and reject any previously issued local session token.
+- [x] Hide administrator navigation entry points until a temporary password has been replaced, while retaining server enforcement.
+- [x] Add regression coverage for cart-drawer quantity updates and removal after an item has been added.
+- [x] Validate live Shopify cart management and checkout handoff behavior after connected-browser interaction timed out, without initiating payment.
+- [x] Prevent stale cart rehydration responses from overwriting a newer add, quantity, or removal mutation.
+- [x] Expose the existing administrator password-reset procedure safely in the user-management interface and validate its forced-rotation outcome.
+- [x] Restore the Shopify Storefront API credential after the live smoke test returned HTTP 401, then rerun the live catalogue verification.
+- [x] Attempt Shopify integration reconnection and request owner confirmation only if OAuth or store-ownership approval is required.
+- [x] Reissue the Shopify connector confirmation after the initial review card did not appear to the owner.
+- [x] Supersede the unavailable generic Shopify authorization card after the project-level Shopify integration refresh restored the production Storefront connection.
+- [x] Audit the newly refreshed Shopify project integration against the existing store and catalogue before accepting it as the production connection.
+- [x] Restore Shopify environment variables after mocked commerce tests so the live Shopify smoke suite uses its real credential.

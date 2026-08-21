@@ -17,7 +17,7 @@
  */
 
 import { describe, expect, it } from "vitest";
-import { isShopifyConfigured, listProducts } from "./_core/shopify";
+import { createCart, isShopifyConfigured, listProducts, removeCartLines, updateCartLines } from "./_core/shopify";
 
 const configured = isShopifyConfigured();
 
@@ -54,6 +54,28 @@ describe.skipIf(!configured)("shopify smoke (live)", () => {
         usable,
         "No product had all three of: title, first image URL, and price > 0"
       ).toBeTruthy();
+    }
+  );
+
+  it(
+    "creates, updates, and empties a storefront cart without initiating checkout",
+    { timeout: 30_000 },
+    async () => {
+      const products = await listProducts({ first: 10 });
+      const variant = products.flatMap(product => product.variants).find(item => item.availableForSale);
+      expect(variant, "No available Shopify variant was returned for the cart flow").toBeTruthy();
+
+      const cart = await createCart([{ variantId: variant!.id, quantity: 1 }]);
+      expect(cart.itemCount).toBe(1);
+      expect(cart.items).toHaveLength(1);
+      expect(cart.checkoutUrl).toContain("channel=online_store");
+
+      const updated = await updateCartLines(cart.id, [{ lineId: cart.items[0].lineId, quantity: 2 }]);
+      expect(updated.itemCount).toBe(2);
+
+      const emptied = await removeCartLines(updated.id, [updated.items[0].lineId]);
+      expect(emptied.itemCount).toBe(0);
+      expect(emptied.items).toHaveLength(0);
     }
   );
 });

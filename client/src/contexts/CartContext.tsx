@@ -1,12 +1,14 @@
 import { trpc } from "@/lib/trpc";
 import type { Cart } from "@shared/commerce/types";
 import {
+  default as React,
   createContext,
   ReactNode,
   useCallback,
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 
@@ -54,6 +56,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [cart, setCart] = useState<Cart | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const cartMutationVersion = useRef(0);
 
   const utils = trpc.useUtils();
 
@@ -63,12 +66,14 @@ export function CartProvider({ children }: { children: ReactNode }) {
       setCart(null);
       return;
     }
+    if (cart?.id === cartId) return;
     let cancelled = false;
+    const rehydrationVersion = cartMutationVersion.current;
     setLoading(true);
     utils.commerce.cart.get
       .fetch({ cartId })
       .then(c => {
-        if (cancelled) return;
+        if (cancelled || rehydrationVersion !== cartMutationVersion.current) return;
         if (c) setCart(c);
         else {
           // Stored cart id no longer valid — drop it.
@@ -77,17 +82,17 @@ export function CartProvider({ children }: { children: ReactNode }) {
         }
       })
       .catch(() => {
-        if (cancelled) return;
+        if (cancelled || rehydrationVersion !== cartMutationVersion.current) return;
         writeStoredCartId(null);
         setCartId(null);
       })
       .finally(() => {
-        if (!cancelled) setLoading(false);
+        if (!cancelled && rehydrationVersion === cartMutationVersion.current) setLoading(false);
       });
     return () => {
       cancelled = true;
     };
-  }, [cartId, utils.commerce.cart.get]);
+  }, [cart, cartId, utils.commerce.cart.get]);
 
   const itemCount = cart?.itemCount ?? 0;
 
@@ -96,6 +101,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const addItem = useCallback(
     async (variantId: string, quantity: number = 1) => {
+      cartMutationVersion.current += 1;
       setLoading(true);
       try {
         if (!cartId || !cart) {
@@ -123,6 +129,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const updateQuantity = useCallback(
     async (lineId: string, quantity: number) => {
       if (!cartId) return;
+      cartMutationVersion.current += 1;
       setLoading(true);
       try {
         const updated = await utils.client.commerce.cart.updateLines.mutate({
@@ -140,6 +147,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const removeItem = useCallback(
     async (lineId: string) => {
       if (!cartId) return;
+      cartMutationVersion.current += 1;
       setLoading(true);
       try {
         const updated = await utils.client.commerce.cart.removeLines.mutate({
@@ -155,6 +163,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   );
 
   const clearCart = useCallback(() => {
+    cartMutationVersion.current += 1;
     writeStoredCartId(null);
     setCartId(null);
     setCart(null);

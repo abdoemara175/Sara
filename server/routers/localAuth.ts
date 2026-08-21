@@ -47,6 +47,18 @@ export const localAuthRouter = router({
     const validationError = validateNewPassword(input.newPassword);
     if (validationError) throw new TRPCError({ code: "BAD_REQUEST", message: validationError });
     await db.updateLocalPassword(user.id, await hashPassword(input.newPassword));
+    await db.incrementSessionVersion(user.id);
+    const updatedUser = await db.getUserById(user.id);
+    if (!updatedUser) throw new TRPCError({ code: "NOT_FOUND", message: "Account no longer exists" });
+    const token = await sdk.createSessionToken(updatedUser.openId, {
+      expiresInMs: 12 * 60 * 60 * 1000,
+      name: updatedUser.name || updatedUser.email || "Store user",
+      sessionVersion: updatedUser.sessionVersion,
+    });
+    ctx.res.cookie(COOKIE_NAME, token, {
+      ...getSessionCookieOptions(ctx.req),
+      maxAge: 12 * 60 * 60 * 1000,
+    });
     return { success: true } as const;
   }),
 });
