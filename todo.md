@@ -78,6 +78,7 @@
 - [ ] Add a static GitHub Pages landing page that clearly links to the managed full-stack storefront and explains its server-side requirements.
 - [ ] Enable GitHub Pages for the static landing page and verify the source repository and Pages URL after publication.
 - [ ] Publish GitHub Pages through the docs branch source after GitHub rejected workflow creation for the current token scope.
+- [ ] Add a root Pages entry point that redirects to the maintained docs overview when GitHub Pages uses the repository root source.
 - [x] Defer GitHub synchronization and GitHub Pages publishing until the owner explicitly confirms the final upload.
 - [x] Validate the cart management and checkout handoff with live Storefront cart operations and application-state regression coverage after connected-browser interaction timed out.
 - [x] Verify the updated storefront on a tablet viewport, including navigation, category filtering, product detail layout, and cart drawer behavior covered by regression tests.
