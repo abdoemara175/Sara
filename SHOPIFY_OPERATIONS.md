@@ -26,7 +26,13 @@ The live catalogue contains **11 active products**, covering each established NO
 
 ## Non-destructive verification — 21 August 2026
 
-The Shopify management connection was checked without creating, editing, fulfilling, refunding, or deleting any record. The active-product query returned the same eleven published products across the established catalogue categories. The active-discount query returned no records, and the sales-channel order query returned no records.
+The Shopify management connection was checked through specialized read-only product, discount, and order queries without creating, editing, fulfilling, refunding, or deleting any record. The active-product query returned the same eleven published products across the established catalogue categories. The active-discount query returned no records, and the sales-channel order query returned no records. The latter is intentionally limited to the Manus sales channel, so it is not represented as a cross-channel order export.
+
+### Controlled read-only verification
+
+The connected Shopify administration capability may only be invoked directly from the authorized operational environment; it cannot be safely wrapped inside a repository script or deployed application process. The controlled verification therefore uses the specialized product, discount, and order reads directly, each with a maximum page size of 20 and no mutation tool. The baseline on 21 August 2026 was **11 active products**, **0 discount codes**, and **0 Manus-channel orders**.
+
+Counts can legitimately change as the owner publishes products, creates offers, or receives orders; a changed count is a review signal rather than an automatic failure. This limitation is retained intentionally rather than attempting to bypass the authorized connection boundary with embedded credentials or an unreviewed Admin API integration.
 
 The protected NOURA administrator interface was also regression-tested for catalogue, discount, payment, shipping, order, and dedicated orders-workspace handoffs. The orders workspace deliberately states that it does not hold copied order snapshots; this avoids presenting stale payment or fulfilment information as live data. Shopify Admin remains the order, payment, and fulfilment record of truth.
 
