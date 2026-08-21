@@ -74,6 +74,10 @@
 - [x] Prepare a deployment guide that distinguishes the full-stack runtime from GitHub Pages static-hosting limitations.
 - [ ] Synchronize the complete source code and operating documentation to the GitHub repository abdoemara175/Sara.
 - [ ] Inspect GitHub Pages configuration and confirm the compatible publishing approach without representing the static host as a full-stack deployment.
+- [ ] Audit the Sara repository state and preserve the complete application source and documentation during synchronization.
+- [ ] Add a static GitHub Pages landing page that clearly links to the managed full-stack storefront and explains its server-side requirements.
+- [ ] Enable GitHub Pages for the static landing page and verify the source repository and Pages URL after publication.
+- [ ] Publish GitHub Pages through the docs branch source after GitHub rejected workflow creation for the current token scope.
 - [x] Defer GitHub synchronization and GitHub Pages publishing until the owner explicitly confirms the final upload.
 - [x] Validate the cart management and checkout handoff with live Storefront cart operations and application-state regression coverage after connected-browser interaction timed out.
 - [x] Verify the updated storefront on a tablet viewport, including navigation, category filtering, product detail layout, and cart drawer behavior covered by regression tests.

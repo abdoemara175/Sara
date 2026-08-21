@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="NOURA Beauty Store project overview and live storefront link." />
+    <title>NOURA Beauty Store — Project Overview</title>
+    <style>
+      :root { --ink: #211d1a; --clay: #a76c45; --cream: #fcfbf8; --sand: #f2eee7; --muted: #6e625a; }
+      * { box-sizing: border-box; }
+      body { margin: 0; min-width: 320px; color: var(--ink); background: var(--cream); font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      a { color: inherit; }
+      .shell { width: min(1120px, calc(100% - 2rem)); margin: 0 auto; }
+      header { display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 0; border-bottom: 1px solid #e9e2d9; }
+      .brand { font-family: Georgia, serif; font-size: 1.9rem; font-weight: 900; letter-spacing: -0.11em; text-decoration: none; }
+      .brand span { color: var(--clay); }
+      .status { color: var(--clay); font-size: .68rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
+      main { padding: 4rem 0 3rem; }
+      .hero { display: grid; gap: 2rem; align-items: center; grid-template-columns: 1.3fr .7fr; padding: clamp(2rem, 6vw, 5rem); border-radius: 2rem; color: #fff; background: linear-gradient(120deg, #2d2722, #805b44 52%, #d8b494); overflow: hidden; }
+      .eyebrow { margin: 0; color: #f3cfab; font-size: .7rem; font-weight: 900; letter-spacing: .18em; text-transform: uppercase; }
+      h1, h2 { font-family: Georgia, serif; letter-spacing: -.05em; }
+      h1 { max-width: 9ch; margin: .7rem 0 1.2rem; font-size: clamp(3rem, 7vw, 6.4rem); line-height: .9; }
+      .lede { max-width: 50ch; color: #fff7ed; line-height: 1.75; }
+      .cta { display: inline-flex; margin-top: 1rem; padding: .9rem 1.25rem; border-radius: 999px; color: var(--ink); background: #fff; font-size: .78rem; font-weight: 900; letter-spacing: .12em; text-decoration: none; text-transform: uppercase; transition: transform .16s ease, background .16s ease; }
+      .cta:hover { background: #f3cfab; transform: translateY(-2px); }
+      .hero-card { padding: 1.5rem; border: 1px solid rgb(255 255 255 / 25%); border-radius: 1.5rem; background: rgb(255 255 255 / 10%); backdrop-filter: blur(8px); }
+      .hero-card strong { display: block; margin: .5rem 0; font-size: 1.6rem; }
+      .grid { display: grid; gap: 1rem; grid-template-columns: repeat(3, 1fr); margin-top: 1.5rem; }
+      .card { min-height: 170px; padding: 1.5rem; border: 1px solid #e9e2d9; border-radius: 1.25rem; background: #fff; }
+      .card h2 { margin: 0 0 .7rem; font-size: 1.5rem; }
+      .card p { margin: 0; color: var(--muted); font-size: .94rem; line-height: 1.7; }
+      .note { margin-top: 1.5rem; padding: 1rem 1.15rem; border-left: 3px solid var(--clay); border-radius: .4rem; background: var(--sand); color: #51463f; font-size: .9rem; line-height: 1.65; }
+      footer { padding: 2rem 0 3rem; color: var(--muted); font-size: .78rem; }
+      @media (max-width: 760px) { .hero, .grid { grid-template-columns: 1fr; } main { padding-top: 2rem; } h1 { max-width: none; } .status { display: none; } }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <header>
+        <a class="brand" href="https://cosmobeauty-nx34uya9.manus.space">NOURA<span>.</span></a>
+        <span class="status">Full application online</span>
+      </header>
+      <main>
+        <section class="hero">
+          <div>
+            <p class="eyebrow">Egyptian beauty commerce</p>
+            <h1>Quiet formulas. Visible ritual.</h1>
+            <p class="lede">A polished beauty storefront with product discovery, Shopify cart handoff, local account access, and protected operations for the store team.</p>
+            <a class="cta" href="https://cosmobeauty-nx34uya9.manus.space">Open the live storefront</a>
+          </div>
+          <aside class="hero-card">
+            <p class="eyebrow">Project status</p>
+            <strong>Full-stack application</strong>
+            <p class="lede">The production experience is hosted on the managed application domain, where its server, database, authentication, and Shopify integration can run securely.</p>
+          </aside>
+        </section>
+        <section class="grid" aria-label="Project capabilities">
+          <article class="card"><h2>Discover</h2><p>Eleven beauty-category routes, natural-language search, product variants, and responsive browsing across devices.</p></article>
+          <article class="card"><h2>Buy</h2><p>Shopify-backed catalogue and cart behavior, quantity management, and a protected checkout handoff.</p></article>
+          <article class="card"><h2>Operate</h2><p>Local email/password access, role-based administration, session controls, and user-management safeguards.</p></article>
+        </section>
+        <p class="note"><strong>About this page:</strong> GitHub Pages serves this static project overview only. It cannot host the server-side authentication, database, AI search, or Shopify credential logic required by the working store. Use the live storefront button above for the complete experience.</p>
+      </main>
+      <footer>© 2026 NOURA Beauty Store · Source and operational documentation are maintained in this repository.</footer>
+    </div>
+  </body>
+</html>
