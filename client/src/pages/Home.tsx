@@ -1,33 +1,34 @@
-import { useAuth } from "@/_core/hooks/useAuth";
-import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
-import { Streamdown } from 'streamdown';
+import { useEffect, useMemo, useState } from "react";
+import { ArrowRight, ChevronLeft, ChevronRight, Clock3, Sparkles } from "lucide-react";
+import { Link } from "wouter";
+import { CartDrawer, categories, HERO_IMAGE, ProductGrid, StoreFooter, StoreHeader, TrustBar } from "@/components/storefront";
+import { trpc } from "@/lib/trpc";
 
-/**
- * All content in this page are only for example, replace with your own feature implementation
- * When building pages, remember your instructions in Frontend Workflow, Frontend Best Practices, Design Guide and Common Pitfalls
- */
+const heroSlides = [
+  { brand: "The Ordinary", title: "Quiet formulas. Visible ritual.", note: "Straightforward essentials for an intentional shelf." },
+  { brand: "Anua", title: "Calm begins with care.", note: "Gentle textures for balanced daily routines." },
+  { brand: "Cosrx", title: "Smart care, simply done.", note: "Thoughtful beauty with a clear point of view." },
+  { brand: "Maybelline", title: "Colour made effortless.", note: "Modern make-up moments for every expression." },
+  { brand: "Sheglam", title: "Play with pigment.", note: "Soft-focus colour for joyful everyday looks." },
+];
+
+function useCountdown() {
+  const target = useMemo(() => Date.now() + 1000 * 60 * 60 * 14, []);
+  const [remaining, setRemaining] = useState(target - Date.now());
+  useEffect(() => { const timer = window.setInterval(() => setRemaining(Math.max(0, target - Date.now())), 1000); return () => window.clearInterval(timer); }, [target]);
+  const total = Math.floor(remaining / 1000);
+  return { hours: String(Math.floor(total / 3600)).padStart(2, "0"), minutes: String(Math.floor((total % 3600) / 60)).padStart(2, "0"), seconds: String(total % 60).padStart(2, "0") };
+}
+
 export default function Home() {
-  // The useAuth hook provides authentication state.
-  // To implement login/logout, call logout(), or start login from an event
-  // handler: onClick={() => startLogin()} (imported from "@/const"). Never call
-  // startLogin() during render (no href={startLogin()}) — it mints a one-time
-  // nonce cookie and must run only at the moment of navigation.
-  let { user, loading, error, isAuthenticated, logout } = useAuth();
-
-  // If theme is switchable in App.tsx, we can implement theme toggling like this:
-  // const { theme, toggleTheme } = useTheme();
-
-  return (
-    <div className="min-h-screen flex flex-col">
-      <main>
-        {/* Example: lucide-react for icons */}
-        <Loader2 className="animate-spin" />
-        Example Page
-        {/* Example: Streamdown for markdown rendering */}
-        <Streamdown>Any **markdown** content</Streamdown>
-        <Button variant="default">Example Button</Button>
-      </main>
-    </div>
-  );
+  const { data: products = [], isLoading } = trpc.commerce.products.list.useQuery({ first: 12 });
+  const [slide, setSlide] = useState(0);
+  const countdown = useCountdown();
+  useEffect(() => { const timer = window.setInterval(() => setSlide(current => (current + 1) % heroSlides.length), 5200); return () => window.clearInterval(timer); }, []);
+  const active = heroSlides[slide];
+  const featured = products.filter(product => product.tags.includes("Featured"));
+  const flashSale = products.filter(product => product.tags.includes("Flash Sale"));
+  const categoryCounts = useMemo(() => Object.fromEntries(categories.map(category => [category, products.filter(product => product.productType === category || product.tags.includes(category)).length])), [products]);
+  const productsForSection = (items: typeof products) => items.length ? items : products;
+  return <div className="min-h-screen bg-[#fcfbf8]"><StoreHeader /><main><section className="container pt-5 sm:pt-7"><div className="relative min-h-[500px] overflow-hidden rounded-[2rem] bg-stone-900 sm:min-h-[565px]" style={{ backgroundImage: `linear-gradient(90deg, rgba(35, 28, 23, 0.85) 0%, rgba(35, 28, 23, 0.55) 42%, rgba(35, 28, 23, 0.02) 74%), url(${HERO_IMAGE})`, backgroundSize: "cover", backgroundPosition: "center" }}><div className="relative flex min-h-[500px] max-w-xl flex-col justify-center px-7 py-12 text-white sm:min-h-[565px] sm:px-14"><div className="mb-5 flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.22em] text-[#f0c292]"><Sparkles size={14} /> Beauty collection 0{slide + 1}</div><p className="font-serif text-2xl italic text-[#f7d5ad]">{active.brand}</p><h1 className="mt-3 font-serif text-5xl font-black leading-[0.9] sm:text-7xl">{active.title}</h1><p className="mt-6 max-w-sm text-sm leading-6 text-stone-200">{active.note}</p><Link href="/shop" className="mt-8 inline-flex w-fit items-center gap-2 rounded-full bg-white px-5 py-3 text-xs font-black uppercase tracking-[0.13em] text-stone-900 transition hover:bg-[#e9b782]">Shop collection <ArrowRight size={14} /></Link></div><button onClick={() => setSlide((slide + heroSlides.length - 1) % heroSlides.length)} className="absolute bottom-6 right-14 grid h-10 w-10 place-items-center rounded-full border border-white/40 bg-white/10 text-white backdrop-blur hover:bg-white/20" aria-label="Previous slide"><ChevronLeft size={18} /></button><button onClick={() => setSlide((slide + 1) % heroSlides.length)} className="absolute bottom-6 right-3 grid h-10 w-10 place-items-center rounded-full border border-white/40 bg-white/10 text-white backdrop-blur hover:bg-white/20" aria-label="Next slide"><ChevronRight size={18} /></button><div className="absolute bottom-7 left-7 flex gap-2 sm:left-14">{heroSlides.map((item, index) => <button key={item.brand} aria-label={`Show ${item.brand}`} onClick={() => setSlide(index)} className={`h-1.5 rounded-full transition ${index === slide ? "w-7 bg-[#f0c292]" : "w-2 bg-white/60"}`} />)}</div></div></section><TrustBar /><section className="container py-16 sm:py-24"><div className="flex flex-col justify-between gap-6 md:flex-row md:items-end"><div><p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#a76c45]">Limited beauty edit</p><h2 className="mt-3 font-serif text-4xl font-black italic text-stone-900 sm:text-5xl">Flash sale</h2></div><div className="flex items-center gap-2 text-stone-700"><Clock3 size={18} className="text-[#a76c45]" /><span className="text-[10px] font-black uppercase tracking-[0.14em]">Ends in</span>{Object.entries(countdown).map(([label, value]) => <div key={label} className="rounded-xl bg-stone-900 px-3 py-2 text-center text-white"><b className="block font-serif text-xl leading-4">{value}</b><span className="text-[8px] uppercase tracking-[0.12em] text-stone-300">{label}</span></div>)}</div></div><div className="mt-10">{isLoading ? <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">{Array.from({ length: 4 }).map((_, index) => <div key={index} className="aspect-[0.82] animate-pulse rounded-3xl bg-stone-200" />)}</div> : <ProductGrid products={productsForSection(flashSale)} />}</div><Link href="/shop" className="mx-auto mt-11 flex w-fit items-center gap-2 border-b border-stone-900 pb-1 text-xs font-black uppercase tracking-[0.15em]">Shop all products <ArrowRight size={14} /></Link></section><section className="bg-[#f2eee7] py-16 sm:py-24"><div className="container"><div className="max-w-xl"><p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#a76c45]">Shop by ritual</p><h2 className="mt-3 font-serif text-4xl font-black italic text-stone-900 sm:text-5xl">Product categories</h2></div><div className="mt-10 grid grid-cols-2 border-l border-t border-stone-300 sm:grid-cols-3 lg:grid-cols-4">{categories.map((category, index) => <Link href="/shop" key={category} className="group min-h-32 border-b border-r border-stone-300 p-5 transition hover:bg-stone-900 hover:text-white"><span className="text-[10px] font-black tracking-[0.15em] text-[#a76c45] group-hover:text-[#e9b782]">0{index + 1}</span><h3 className="mt-5 font-serif text-xl font-black leading-5">{category}</h3><p className="mt-2 text-[10px] font-bold uppercase tracking-[0.13em] text-stone-500 group-hover:text-stone-300">{categoryCounts[category]} products</p></Link>)}</div></div></section><section id="featured" className="container py-16 sm:py-24"><p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#a76c45]">Selected for you</p><div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end"><h2 className="font-serif text-4xl font-black italic text-stone-900 sm:text-5xl">Featured products</h2><p className="max-w-sm text-sm leading-6 text-stone-500">A short edit of beauty essentials with the kind of details worth returning to.</p></div><div className="mt-10"><ProductGrid products={productsForSection(featured)} /></div></section></main><StoreFooter /><CartDrawer /></div>;
 }

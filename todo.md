@@ -1,0 +1,27 @@
+# Project TODO
+
+- [x] Build a sticky storefront header with original logo treatment, navigation, search entry point, and live cart count.
+- [x] Build the full 11-category mega-menu using the exact category labels requested.
+- [x] Build a responsive hero carousel featuring original visual collections for The Ordinary, Anua, Cosrx, Maybelline, and Sheglam.
+- [x] Add the three required trust badges beneath the hero section with verbatim wording.
+- [x] Build a flash-sale section with a working countdown and discounted product cards.
+- [x] Build reusable product cards with sale presentation, quick-view dialog, and add-to-cart controls.
+- [x] Build the category overview section with all 11 category names and dynamic product counts.
+- [x] Build a separate featured-products grid.
+- [x] Build product details pages with image gallery, price display, variants, description, and cart action.
+- [x] Build a cart drawer with editable quantities, subtotal, and checkout call to action.
+- [x] Build a footer with Facebook, Instagram, TikTok, WhatsApp, and location links.
+- [ ] Complete Shopify payment and fulfilment readiness after the store owner claims and configures the store.
+- [x] Register the Shopify commerce router and required environment exports in the host application.
+- [x] Seed only the minimum original products needed to validate the initial storefront preview.
+- [x] Verify that the live Shopify Storefront catalog is readable before building data-driven storefront views.
+- [ ] Document the Shopify ownership handoff and validate that checkout opens without a payment-configuration blocker.
+- [x] Add a true product-image gallery and validate variant-selector behavior with a multi-variant product.
+- [ ] Document that AI discovery uses the active Shopify catalog and validate taxonomy coverage as products are added to all 11 categories.
+- [x] Run a production build and conduct keyboard/focus accessibility checks for navigation, search, PDP, and cart drawer.
+- [ ] Re-verify the multi-variant Velvet Blush Duo page in the browser after Shopify connectivity stabilizes, including gallery thumbnails and shade selection.
+- [ ] Perform and document explicit keyboard/focus checks for header navigation, AI-search suggestions, product controls, and cart drawer controls.
+- [x] Add AI-powered natural-language product search and typeahead suggestions across all categories.
+- [x] Use original store branding, images, and copy rather than source-site assets or trademark identity.
+- [x] Add automated tests for product-search and shopping-cart business logic.
+- [x] Verify desktop and mobile layouts, interactions, accessibility, and build status.
