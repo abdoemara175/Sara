@@ -158,3 +158,7 @@
 - [x] Restyle the storefront, product discovery, account, cart, and administrator views while preserving existing commerce and role flows.
 - [x] Verify the redesigned interface at desktop, tablet, and mobile widths with automated and visual checks.
 - [x] Calibrate the botanical system to a warmer, more recognizably olive palette while retaining accessible contrast across the storefront and administration views.
+- [x] Record the owner-directed deferral of Cash on Delivery and online-payment activation until a budget and provider are ready.
+- [ ] Collect the selected online payment provider, account-readiness status, Egyptian shipping zones, rates, and delivery estimates before any Shopify settings change.
+- [ ] Apply and verify only the owner-approved Shopify payment and Egyptian shipping settings without initiating a charge or order.
+- [ ] Resume payment and shipping activation only after the owner confirms financial readiness and supplies the approved provider and delivery details.

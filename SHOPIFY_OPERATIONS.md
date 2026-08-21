@@ -60,6 +60,8 @@ The protected NOURA administrator interface was also regression-tested for catal
 
 The owner must complete the following inside Shopify Admin. These actions are intentionally not executed automatically because they can activate financial collection, delivery charges, and customer communications.
 
+> **Current owner decision:** Payment-provider activation, Cash on Delivery activation, shipping rates, and acceptance of live orders are deferred. NOURA must not activate a financial provider, create delivery charges, or place a test order until the owner explicitly resumes this work with an approved budget, provider, and Egyptian delivery details.
+
 - Claim the connected Shopify store and select the required Shopify plan.
 - Choose the Egyptian payment mix: Cash on Delivery only, or Cash on Delivery plus an approved online provider.
 - Configure delivery zones, rates, estimated delivery windows, tax treatment, fulfilment location, and inventory levels.
