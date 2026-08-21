@@ -30,32 +30,32 @@
 }
 
 :root {
-  --noura-ink: #253a28;
-  --noura-ink-soft: #5f775f;
-  --noura-cream: #fcfdf9;
-  --noura-sand: #edf1e8;
-  --noura-clay: #4f744c;
-  --noura-clay-light: #d9e7d1;
-  --noura-line: #dce6d7;
-  --primary: #253a28;
+  --noura-ink: #3e5128;
+  --noura-ink-soft: #6d7d4b;
+  --noura-cream: #fdfcf7;
+  --noura-sand: #eef0e4;
+  --noura-clay: #697b3c;
+  --noura-clay-light: #e0e5c9;
+  --noura-line: #d9dfc4;
+  --primary: #3e5128;
   --primary-foreground: #ffffff;
-  --background: #fcfdf9;
-  --foreground: #253a28;
+  --background: #fdfcf7;
+  --foreground: #3e5128;
   --card: #ffffff;
-  --card-foreground: #253a28;
+  --card-foreground: #3e5128;
   --popover: #ffffff;
-  --popover-foreground: #253a28;
-  --secondary: #edf1e8;
-  --secondary-foreground: #4b5f4d;
-  --muted: #f5f8f2;
-  --muted-foreground: #667567;
-  --accent: #e4efdc;
-  --accent-foreground: #253a28;
+  --popover-foreground: #3e5128;
+  --secondary: #eef0e4;
+  --secondary-foreground: #596942;
+  --muted: #f6f7ef;
+  --muted-foreground: #6d7757;
+  --accent: #e7ead7;
+  --accent-foreground: #3e5128;
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
-  --border: #dce6d7;
-  --input: #dce6d7;
-  --ring: #4f744c;
+  --border: #d9dfc4;
+  --input: #d9dfc4;
+  --ring: #697b3c;
   --radius: 0.75rem;
 }
 
@@ -89,8 +89,8 @@
     -webkit-font-smoothing: antialiased;
   }
   button:not(:disabled), [role="button"]:not([aria-disabled="true"]), [type="button"]:not(:disabled), [type="submit"]:not(:disabled), [type="reset"]:not(:disabled), a[href], select:not(:disabled), input[type="checkbox"]:not(:disabled), input[type="radio"]:not(:disabled) { @apply cursor-pointer; }
-  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 3px solid #6d9867; outline-offset: 3px; }
-  ::selection { background: #d9e7d1; color: #253a28; }
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 3px solid #879354; outline-offset: 3px; }
+  ::selection { background: #e0e5c9; color: #3e5128; }
 }
 
 @layer components {
@@ -109,5 +109,18 @@
   @keyframes noura-reveal { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
   @media (min-width: 640px) { .container { padding-inline: 1.5rem; } }
   @media (min-width: 1024px) { .container { max-width: 1280px; padding-inline: 2rem; } }
+
+  /* Warm olive bridge for existing arbitrary utility values while source components retain their semantic tokens. */
+  [class*="text-[#253a28]"] { color: #3e5128 !important; }
+  [class*="text-[#4f744c]"] { color: #697b3c !important; }
+  [class*="text-[#59775b]"], [class*="text-[#667567]"] { color: #6d7d4b !important; }
+  [class*="text-[#405642]"] { color: #526438 !important; }
+  [class*="text-[#97aa96]"] { color: #98a56f !important; }
+  [class*="bg-[#253a28]"] { background-color: #3e5128 !important; }
+  [class*="bg-[#4f744c]"] { background-color: #697b3c !important; }
+  [class*="bg-[#edf3e8]"], [class*="bg-[#eef4e9]"], [class*="bg-[#f7faf4]"] { background-color: #f0f1e6 !important; }
+  [class*="bg-[#e8f2e4]"], [class*="bg-[#e7f0e2]"] { background-color: #e4e7ce !important; }
+  [class*="border-[#dce6d7]"], [class*="border-[#d5e3ce]"], [class*="border-[#d7e5d0]"] { border-color: #d9dfc4 !important; }
+  [class*="border-[#6d9867]"], [class*="border-[#aec9a9]"] { border-color: #9da972 !important; }
 }
 ***

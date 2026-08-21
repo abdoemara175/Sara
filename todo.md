@@ -137,3 +137,4 @@
 - [x] Replace the current NOURA color, typography, button, card, and spacing tokens with the new olive-and-ivory system.
 - [x] Restyle the storefront, product discovery, account, cart, and administrator views while preserving existing commerce and role flows.
 - [x] Verify the redesigned interface at desktop, tablet, and mobile widths with automated and visual checks.
+- [x] Calibrate the botanical system to a warmer, more recognizably olive palette while retaining accessible contrast across the storefront and administration views.
