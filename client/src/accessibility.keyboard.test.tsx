@@ -3,7 +3,7 @@ import React from "react";
 import { cleanup, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { CartDrawer, categories, shopHref, StoreFooter, StoreHeader } from "./components/storefront";
+import { CartDrawer, categories, ProductGrid, ProductSkeletonGrid, shopHref, StoreFooter, StoreHeader } from "./components/storefront";
 import { categoryFromSearch, filterProductsByCategory } from "./pages/Shop";
 import NotFound from "./pages/NotFound";
 
@@ -49,6 +49,13 @@ afterEach(() => {
 });
 
 describe("real storefront keyboard navigation", () => {
+  it("announces the curated catalogue loading state and gives an empty edit a clear recovery route", () => {
+    render(<><ProductSkeletonGrid label="Curating products…" /><ProductGrid products={[]} /></>);
+    expect(screen.getByLabelText("Curating products…")).toBeTruthy();
+    expect(screen.getByText("A thoughtful edit is on the way.")).toBeTruthy();
+    expect(screen.getByRole("link", { name: "Return to all products" }).getAttribute("href")).toBe("/shop");
+  });
+
   it("keeps category discovery and the empty-bag recovery action on explicit shop routes", () => {
     render(<StoreHeader />);
     expect(shopHref("Skin Care")).toBe("/shop?category=Skin%20Care");

@@ -6,6 +6,10 @@ NOURA uses Shopify as the source of truth for checkout, payments, orders, fulfil
 
 The protected NOURA administrator area provides the operational overview, authenticated user administration, catalogue visibility, and direct, role-safe paths to the relevant Shopify Admin surfaces. Product, discount, order, payment, and fulfilment mutations remain in Shopify Admin until an owner-approved server integration is provisioned.
 
+## Read-only operating baseline — 21 August 2026
+
+The live catalogue contains **11 active products**, covering each established NOURA category once. The store currently has **no discount codes** and **no orders visible to the Manus sales channel**. Payment and shipping readiness must be reviewed by the owner from the protected Shopify Admin settings; those financial settings are deliberately not exposed through the storefront or this runbook.
+
 ## Administrator workflow
 
 | Task | Current safe route | Required information |
@@ -41,4 +45,55 @@ The owner must complete the following inside Shopify Admin. These actions are in
 To expose write actions directly inside NOURA instead of Shopify Admin, the owner must approve a dedicated Shopify app integration with least-privilege scopes and signed webhooks. The integration must cover product, discount, order, and fulfilment access, validate Shopify signatures, reject replayed events, and preserve Shopify as the source of truth. It must be reviewed and enabled only after the owner supplies the secure credentials through project settings.
 
 > **Safety boundary:** NOURA does not store card details, payment-provider credentials, or checkout session secrets. Customer payments remain on Shopify-hosted checkout.
+
+## Owner-ready operating templates
+
+### Product brief
+
+| Required field | Owner value |
+| --- | --- |
+| Product name | `________________` |
+| NOURA category | Choose one exact category from the eleven storefront categories. |
+| Description | `________________` |
+| Regular price (EGP) | `________________` |
+| Sale price / compare-at price (EGP), if applicable | `________________` |
+| Inventory quantity and SKU | `________________` |
+| Active or draft | `________________` |
+| Product images | Approved image URLs or Shopify media uploads. |
+
+### Discount brief
+
+| Required field | Owner value |
+| --- | --- |
+| Internal campaign name | `________________` |
+| Customer discount code | `________________` |
+| Percentage or fixed EGP amount | `________________` |
+| Products / collection scope | `________________` |
+| Start and end date | `________________` |
+| Total-use or per-customer limit | `________________` |
+| Combination rule | `________________` |
+
+Discount codes stay private to Shopify checkout. They are not rendered, hinted at, or hardcoded in the NOURA storefront.
+
+### Order-processing board
+
+| Shopify order state | NOURA operational action | Owner / team decision |
+| --- | --- | --- |
+| New / pending payment | Confirm payment method and address; do not fulfil. | `________________` |
+| Paid or COD confirmed | Reserve inventory and prepare package. | `________________` |
+| Ready to ship | Add courier information and notify customer through approved channels. | `________________` |
+| Fulfilled | Record shipment outcome and resolve any delivery issue in Shopify Admin. | `________________` |
+| Cancelled, refunded, or returned | Handle only through the appropriate Shopify Admin flow. | `________________` |
+
+### Egypt shipping brief
+
+| Required field | Owner value |
+| --- | --- |
+| Payment choice | Cash on Delivery only, or Cash on Delivery plus an approved online provider. |
+| Delivery zones / governorates | `________________` |
+| Shipping price per zone (EGP) | `________________` |
+| Free-shipping threshold, if any | `________________` |
+| Delivery estimate | `________________` |
+| Fulfilment address / location | `________________` |
+| Return and exchange policy | `________________` |
 ***

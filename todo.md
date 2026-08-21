@@ -134,6 +134,18 @@
 - [ ] Implement the approved hybrid operations model: in-site management workspace plus Shopify Admin fallback links for sensitive settings and exceptional actions.
 - [ ] Obtain and validate a least-privilege Shopify Admin API token and webhook signing secret through secure project settings before enabling live write actions.
 - [x] Add regression coverage for the administrator's product, order, discount, payment, and shipping handoff links.
+- [ ] Obtain owner approval for the first concrete product, discount, or order action to complete through Shopify Admin.
+- [ ] Obtain owner confirmation of the selected payment and Egyptian shipping configuration before validating a non-destructive checkout handoff.
+- [x] Establish a read-only baseline for the active catalogue, existing discounts, orders, and payment/shipping readiness.
+- [ ] Collect the owner-approved details required before creating or changing a live product or discount.
+- [x] Define the order-review and fulfilment workflow using Shopify as the system of record.
+- [ ] Complete owner-guided Shopify payment and Egyptian shipping setup without activating a financial provider or placing a test order without approval.
+- [x] Prepare owner-ready product, discount, order-processing, and Egyptian shipping templates without inventing live commercial values.
+- [ ] Execute all safe Shopify operational improvements that do not require invented pricing, discount terms, payment-provider selection, or owner-only financial approval.
+- [x] Audit every public storefront surface for hierarchy, conversion clarity, loading/empty/error behavior, and responsive layout gaps.
+- [x] Improve shared storefront navigation, product cards, search, cart, checkout handoff, and discovery states for a complete shopping journey.
+- [x] Improve home, catalogue, product, account, error, and administrator page polish while preserving Shopify and role flows.
+- [x] Add or update interface regression tests and complete desktop, tablet, and mobile visual verification for the refined frontend.
 - [x] Define a calm botanical skincare visual system inspired by the supplied reference without copying its brand assets or copy.
 - [x] Replace the current NOURA color, typography, button, card, and spacing tokens with the new olive-and-ivory system.
 - [x] Restyle the storefront, product discovery, account, cart, and administrator views while preserving existing commerce and role flows.

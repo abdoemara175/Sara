@@ -25,8 +25,12 @@ export function shopHref(category?: string) {
   return category ? `/shop?category=${encodeURIComponent(category)}` : "/shop";
 }
 
-function productImage(product: Product) {
+export function productImage(product: Product) {
   return product.images[0]?.url || HERO_IMAGE;
+}
+
+export function ProductSkeletonGrid({ count = 4, label = "Curating products…" }: { count?: number; label?: string }) {
+  return <section aria-live="polite" aria-label={label} className="noura-reveal"><div className="mb-5 flex items-center gap-3"><span className="grid h-8 w-8 place-items-center rounded-full bg-[#e4e7ce] text-xs font-black text-[#4f744c]">N</span><div><p className="text-sm font-semibold text-[#253a28]">{label}</p><p className="text-xs text-[#667567]">A considered edit is on its way.</p></div></div><div className="grid grid-cols-2 gap-x-4 gap-y-7 sm:grid-cols-3 lg:grid-cols-4">{Array.from({ length: count }).map((_, index) => <div key={index}><div className="noura-loading-shimmer aspect-[0.88] rounded-xl border border-[#dce6d7]" /><div className="noura-loading-shimmer mt-3 h-3 w-3/5 rounded-full" /><div className="noura-loading-shimmer mt-2 h-3 w-2/5 rounded-full" /></div>)}</div></section>;
 }
 
 export function StoreHeader() {
@@ -98,7 +102,7 @@ export function StoreHeader() {
         </button>
       </div>
       <div className="hidden border-t border-[#edf2e9] lg:block">
-        <div className="container flex h-10 items-center justify-center gap-6 overflow-hidden text-[10px] font-semibold uppercase tracking-[0.09em] text-[#617562]">
+        <div className="noura-scrollbar container flex h-10 items-center justify-start gap-6 overflow-x-auto text-[10px] font-semibold uppercase tracking-[0.09em] text-[#617562]">
           {categories.map(category => <Link key={category} href={shopHref(category)} className="whitespace-nowrap transition hover:text-[#4f744c]">{category}</Link>)}
         </div>
       </div>
@@ -112,28 +116,28 @@ export function StoreHeader() {
         </div>
       )}
       {menuOpen && (
-        <div id="mobile-store-navigation" className="border-t border-stone-200 bg-white px-5 py-5 shadow-lg lg:hidden">
+        <div id="mobile-store-navigation" className="border-t border-[#dce6d7] bg-[#fcfdf9] px-5 py-5 shadow-lg lg:hidden">
           <div className="mb-4 relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[#b2794f]" size={17} />
-            <input value={query} onChange={event => setQuery(event.target.value)} placeholder="Search beauty products" aria-label="Search products on mobile" className="h-10 w-full rounded-full border border-stone-200 pl-10 pr-4 text-sm" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[#4f744c]" size={17} />
+            <input value={query} onChange={event => setQuery(event.target.value)} placeholder="Search beauty products" aria-label="Search products on mobile" className="h-10 w-full rounded-lg border border-[#dce6d7] bg-white pl-10 pr-4 text-sm text-[#253a28]" />
           </div>
           {showSearchResults && (
-            <div className="mb-5 overflow-hidden rounded-2xl border border-stone-200 bg-stone-50 p-2">
-              <div className="flex items-center gap-2 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.14em] text-[#a76c45]">
+            <div className="mb-5 overflow-hidden rounded-xl border border-[#dce6d7] bg-[#f7faf4] p-2">
+              <div className="flex items-center gap-2 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.14em] text-[#4f744c]">
                 <Sparkles size={13} /> {isFetching ? "Finding your match" : "AI product matches"}
               </div>
               {searchData?.products.length ? searchData.products.map(product => (
                 <Link key={product.id} href={`/product/${product.handle}`} onClick={() => { setQuery(""); setMenuOpen(false); }} className="flex items-center gap-3 rounded-xl px-3 py-2 hover:bg-white">
                   <img src={productImage(product)} alt="" className="h-10 w-10 rounded-lg object-cover" />
-                  <span className="min-w-0 flex-1 truncate text-sm font-semibold text-stone-800">{product.title}</span>
-                  <span className="text-xs text-stone-500">{formatEgp(product.priceRange.min)}</span>
+                  <span className="min-w-0 flex-1 truncate text-sm font-semibold text-[#253a28]">{product.title}</span>
+                  <span className="text-xs text-[#667567]">{formatEgp(product.priceRange.min)}</span>
                 </Link>
-              )) : !isFetching && <p className="px-3 py-4 text-sm text-stone-500">Try a different beauty concern or product type.</p>}
+              )) : !isFetching && <p className="px-3 py-4 text-sm text-[#667567]">Try a different beauty concern or product type.</p>}
             </div>
           )}
-          <div className="mb-5 grid grid-cols-3 gap-2 border-b border-stone-100 pb-5 text-xs font-bold uppercase tracking-[0.1em] text-stone-700"><Link href="/" onClick={() => setMenuOpen(false)} className="rounded-xl bg-stone-50 px-3 py-3 text-center">Home</Link><Link href="/shop" onClick={() => setMenuOpen(false)} className="rounded-xl bg-stone-50 px-3 py-3 text-center">Shop</Link><Link href="/account" onClick={() => setMenuOpen(false)} className="rounded-xl bg-stone-50 px-3 py-3 text-center">Account</Link></div>
-          <p className="mb-3 text-[10px] font-black uppercase tracking-[0.16em] text-[#a76c45]">Shop by category</p>
-          <div className="grid grid-cols-2 gap-2 text-sm text-stone-700">{categories.map(category => <Link key={category} href={shopHref(category)} onClick={() => setMenuOpen(false)} className="rounded-xl bg-stone-50 px-3 py-2.5 transition hover:bg-[#f2eee7]">{category}</Link>)}</div>
+          <div className="mb-5 grid grid-cols-3 gap-2 border-b border-[#edf2e9] pb-5 text-xs font-bold uppercase tracking-[0.1em] text-[#405642]"><Link href="/" onClick={() => setMenuOpen(false)} className="rounded-lg bg-[#eef4e9] px-3 py-3 text-center">Home</Link><Link href="/shop" onClick={() => setMenuOpen(false)} className="rounded-lg bg-[#eef4e9] px-3 py-3 text-center">Shop</Link><Link href="/account" onClick={() => setMenuOpen(false)} className="rounded-lg bg-[#eef4e9] px-3 py-3 text-center">Account</Link></div>
+          <p className="mb-3 text-[10px] font-black uppercase tracking-[0.16em] text-[#4f744c]">Shop by category</p>
+          <div className="grid grid-cols-2 gap-2 text-sm text-[#405642]">{categories.map(category => <Link key={category} href={shopHref(category)} onClick={() => setMenuOpen(false)} className="rounded-lg bg-[#eef4e9] px-3 py-2.5 transition hover:bg-[#e4e7ce]">{category}</Link>)}</div>
         </div>
       )}
     </header>
@@ -188,7 +192,7 @@ export function ProductCard({ product }: { product: Product }) {
 }
 
 export function ProductGrid({ products, emptyMessage }: { products: Product[]; emptyMessage?: string }) {
-  if (!products.length) return <div className="rounded-3xl border border-dashed border-stone-300 bg-stone-50 px-6 py-14 text-center text-stone-500">{emptyMessage || "The collection is being prepared."}</div>;
+  if (!products.length) return <div className="noura-card rounded-2xl px-6 py-14 text-center"><Sparkles size={22} className="mx-auto text-[#697b3c]" /><p className="mt-4 text-xl font-semibold text-[#253a28]">A thoughtful edit is on the way.</p><p className="mx-auto mt-2 max-w-md text-sm leading-6 text-[#667567]">{emptyMessage || "The collection is being prepared."}</p><Link href="/shop" className="mt-6 inline-flex text-xs font-black uppercase tracking-[0.12em] text-[#4f744c]">Return to all products</Link></div>;
   return <div className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 lg:grid-cols-4">{products.map(product => <ProductCard product={product} key={product.id} />)}</div>;
 }
 
