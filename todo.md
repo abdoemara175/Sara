@@ -114,3 +114,13 @@
 - [x] Create publishable sample products with clear titles, prices, descriptions, product types, tags, and variants where useful.
 - [x] Verify the new live products populate their intended category filters and product cards without disrupting cart behavior.
 - [x] Provide a safe product-detail image fallback for newly created Shopify products that do not yet have media attached.
+- [x] Audit public pages, navigation, category routes, search, and error recovery across desktop, tablet, and mobile viewports.
+- [x] Audit cart creation, quantity updates, removal, and checkout handoff against live Shopify.
+- [x] Audit local sign-in, rejected credentials, forced password change, sign-out, and revoked-session behavior.
+- [x] Audit administrator access controls and user-management safeguards without altering production users.
+- [x] Review production quality gates, browser/server logs, performance indicators, accessibility, and security posture.
+- [x] Fix any material issue found, repeat validation, and document the final audit outcome.
+- [x] Split route code to reduce the initial browser bundle flagged by the production build.
+- [x] Complete interface-level verification of Arabic and English storefront search, empty-result recovery, and clearing behavior.
+- [x] Verify that clearing a storefront search query removes its results panel and returns the header to its idle state.
+- [x] Verify Arabic, English, empty-result, and clear/reset behavior on the desktop storefront search surface.

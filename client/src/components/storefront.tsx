@@ -41,6 +41,7 @@ export function StoreHeader() {
     { query: debounced, first: 5 },
     { enabled: debounced.trim().length > 1 }
   );
+  const showSearchResults = query.trim().length > 1;
 
   useEffect(() => {
     const timer = window.setTimeout(() => setDebounced(query.trim()), 280);
@@ -73,9 +74,10 @@ export function StoreHeader() {
             value={query}
             onChange={event => setQuery(event.target.value)}
             placeholder="Ask for a product in Arabic or English..."
+            aria-label="Search products"
             className="h-10 w-full rounded-full border border-stone-200 bg-white pl-10 pr-4 text-sm outline-none transition focus:border-[#b2794f]"
           />
-          {query.length > 1 && (
+          {showSearchResults && (
             <div className="absolute left-0 right-0 top-12 overflow-hidden rounded-2xl border border-stone-200 bg-white p-2 shadow-xl">
               <div className="flex items-center gap-2 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.14em] text-[#a76c45]">
                 <Sparkles size={13} /> {isFetching ? "Finding your match" : "AI product matches"}
@@ -113,8 +115,22 @@ export function StoreHeader() {
         <div id="mobile-store-navigation" className="border-t border-stone-200 bg-white px-5 py-5 shadow-lg lg:hidden">
           <div className="mb-4 relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[#b2794f]" size={17} />
-            <input value={query} onChange={event => setQuery(event.target.value)} placeholder="Search beauty products" className="h-10 w-full rounded-full border border-stone-200 pl-10 pr-4 text-sm" />
+            <input value={query} onChange={event => setQuery(event.target.value)} placeholder="Search beauty products" aria-label="Search products on mobile" className="h-10 w-full rounded-full border border-stone-200 pl-10 pr-4 text-sm" />
           </div>
+          {showSearchResults && (
+            <div className="mb-5 overflow-hidden rounded-2xl border border-stone-200 bg-stone-50 p-2">
+              <div className="flex items-center gap-2 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.14em] text-[#a76c45]">
+                <Sparkles size={13} /> {isFetching ? "Finding your match" : "AI product matches"}
+              </div>
+              {searchData?.products.length ? searchData.products.map(product => (
+                <Link key={product.id} href={`/product/${product.handle}`} onClick={() => { setQuery(""); setMenuOpen(false); }} className="flex items-center gap-3 rounded-xl px-3 py-2 hover:bg-white">
+                  <img src={productImage(product)} alt="" className="h-10 w-10 rounded-lg object-cover" />
+                  <span className="min-w-0 flex-1 truncate text-sm font-semibold text-stone-800">{product.title}</span>
+                  <span className="text-xs text-stone-500">{formatEgp(product.priceRange.min)}</span>
+                </Link>
+              )) : !isFetching && <p className="px-3 py-4 text-sm text-stone-500">Try a different beauty concern or product type.</p>}
+            </div>
+          )}
           <div className="mb-5 grid grid-cols-3 gap-2 border-b border-stone-100 pb-5 text-xs font-bold uppercase tracking-[0.1em] text-stone-700"><Link href="/" onClick={() => setMenuOpen(false)} className="rounded-xl bg-stone-50 px-3 py-3 text-center">Home</Link><Link href="/shop" onClick={() => setMenuOpen(false)} className="rounded-xl bg-stone-50 px-3 py-3 text-center">Shop</Link><Link href="/account" onClick={() => setMenuOpen(false)} className="rounded-xl bg-stone-50 px-3 py-3 text-center">Account</Link></div>
           <p className="mb-3 text-[10px] font-black uppercase tracking-[0.16em] text-[#a76c45]">Shop by category</p>
           <div className="grid grid-cols-2 gap-2 text-sm text-stone-700">{categories.map(category => <Link key={category} href={shopHref(category)} onClick={() => setMenuOpen(false)} className="rounded-xl bg-stone-50 px-3 py-2.5 transition hover:bg-[#f2eee7]">{category}</Link>)}</div>

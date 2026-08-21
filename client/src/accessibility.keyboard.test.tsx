@@ -1,6 +1,6 @@
 /** @vitest-environment jsdom */
 import React from "react";
-import { cleanup, render, screen } from "@testing-library/react";
+import { cleanup, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { CartDrawer, categories, shopHref, StoreFooter, StoreHeader } from "./components/storefront";
@@ -9,11 +9,12 @@ import NotFound from "./pages/NotFound";
 
 const cartState = vi.fn();
 const authState = vi.fn();
+const searchState = vi.fn();
 
 vi.mock("@/contexts/CartContext", () => ({ useCart: () => cartState() }));
 vi.mock("@/_core/hooks/useAuth", () => ({ useAuth: () => authState() }));
 vi.mock("@/lib/trpc", () => ({
-  trpc: { search: { products: { useQuery: () => ({ data: { products: [] }, isFetching: false }) } } },
+  trpc: { search: { products: { useQuery: () => searchState() } } },
 }));
 
 const cart = {
@@ -39,6 +40,7 @@ const actions = {
 beforeEach(() => {
   cartState.mockReturnValue({ cart, isOpen: false, loading: false, itemCount: 1, ...actions });
   authState.mockReturnValue({ user: { role: "admin" } });
+  searchState.mockReturnValue({ data: { products: [] }, isFetching: false });
 });
 
 afterEach(() => {
@@ -85,6 +87,39 @@ describe("real storefront keyboard navigation", () => {
 
     expect(document.activeElement).toBe(screen.getByRole("button", { name: "Open cart" }));
     expect(screen.getByRole("link", { name: "Admin" }).getAttribute("href")).toBe("/admin");
+  });
+
+  it("renders Arabic and English desktop search results, recovers from no matches, and returns to idle when cleared", async () => {
+    const user = userEvent.setup();
+    const matchedProduct = {
+      id: "serene",
+      handle: "serene-barrier-serum",
+      title: "Serene Barrier Serum",
+      images: [],
+      priceRange: { min: { amount: "790.00", currencyCode: "EGP" } },
+    } as any;
+    searchState.mockReturnValue({ data: { products: [matchedProduct] }, isFetching: false });
+    render(<StoreHeader />);
+
+    const desktopSearch = screen.getByRole("textbox", { name: "Search products" });
+    await user.type(desktopSearch, "سيروم");
+    expect(screen.getByText("AI product matches")).toBeTruthy();
+    expect(screen.getByRole("link", { name: /Serene Barrier Serum/ }).getAttribute("href")).toBe("/product/serene-barrier-serum");
+
+    await user.clear(desktopSearch);
+    expect(screen.queryByText("AI product matches")).toBeNull();
+    expect(screen.queryByText("Try a different beauty concern or product type.")).toBeNull();
+
+    await user.type(desktopSearch, "barrier serum");
+    expect(screen.getByRole("link", { name: /Serene Barrier Serum/ })).toBeTruthy();
+
+    searchState.mockReturnValue({ data: { products: [] }, isFetching: false });
+    await user.type(desktopSearch, " x");
+    expect(screen.getByText("Try a different beauty concern or product type.")).toBeTruthy();
+
+    await user.clear(desktopSearch);
+    expect(screen.queryByText("AI product matches")).toBeNull();
+    expect(screen.queryByText("Try a different beauty concern or product type.")).toBeNull();
   });
 
   it("does not expose an administrator shortcut before a temporary password is changed", () => {
@@ -135,6 +170,35 @@ describe("real storefront keyboard navigation", () => {
     expect(mobileNavigation).toBeTruthy();
     expect(mobileNavigation?.querySelector('a[href="/account"]')).toBeTruthy();
     expect(mobileNavigation?.querySelector('a[href="/shop?category=Skin%20Care"]')).toBeTruthy();
+  });
+
+  it("shows AI search matches for Arabic and English input in the mobile navigation and recovers from no matches", async () => {
+    const user = userEvent.setup();
+    const matchedProduct = {
+      id: "serene",
+      handle: "serene-barrier-serum",
+      title: "Serene Barrier Serum",
+      images: [],
+      priceRange: { min: { amount: "790.00", currencyCode: "EGP" } },
+    } as any;
+    searchState.mockReturnValue({ data: { products: [matchedProduct] }, isFetching: false });
+    render(<StoreHeader />);
+
+    await user.click(screen.getByRole("button", { name: "Open navigation" }));
+    const mobileSearch = screen.getByRole("textbox", { name: "Search products on mobile" });
+    const mobileNavigation = document.getElementById("mobile-store-navigation");
+    expect(mobileNavigation).toBeTruthy();
+    await user.type(mobileSearch, "سيروم");
+    expect(within(mobileNavigation!).getByText("AI product matches")).toBeTruthy();
+    expect(within(mobileNavigation!).getByRole("link", { name: /Serene Barrier Serum/ }).getAttribute("href")).toBe("/product/serene-barrier-serum");
+
+    await user.clear(mobileSearch);
+    await user.type(mobileSearch, "barrier serum");
+    expect(within(mobileNavigation!).getByRole("link", { name: /Serene Barrier Serum/ })).toBeTruthy();
+
+    searchState.mockReturnValue({ data: { products: [] }, isFetching: false });
+    await user.type(mobileSearch, "x");
+    expect(within(mobileNavigation!).getByText("Try a different beauty concern or product type.")).toBeTruthy();
   });
 
   it("keeps the live cart drawer close, quantity, removal, and checkout controls reachable by Tab", async () => {
