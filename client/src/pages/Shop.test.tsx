@@ -20,6 +20,8 @@ const fixtureCatalogue = [
     variants: [{ id: "makeup-variant", title: "Rose", availableForSale: true, price: { amount: "620", currencyCode: "EGP" }, compareAtPrice: null, selectedOptions: [] }],
   },
 ];
+let liveCatalogue: any[] = [];
+let useLiveCatalogue = false;
 
 vi.mock("@/contexts/CartContext", () => ({
   useCart: () => ({ cart: null, isOpen: false, loading: false, itemCount: 0, openCart: vi.fn(), closeCart: vi.fn(), addItem: vi.fn(), updateQuantity: vi.fn(), removeItem: vi.fn(), clearCart: vi.fn(), proceedToCheckout: vi.fn() }),
@@ -50,7 +52,7 @@ function assertCategoryRoute(category: string, products: any[], source: "fixture
   cleanup();
 }
 
-beforeEach(() => { catalogueState.products = fixtureCatalogue; });
+beforeEach(() => { catalogueState.products = useLiveCatalogue ? liveCatalogue : fixtureCatalogue; });
 afterEach(() => cleanup());
 
 describe("shop category acceptance matrix", () => {
@@ -63,14 +65,13 @@ describe("shop category acceptance matrix", () => {
 
 const liveShopifyEnabled = isShopifyConfigured();
 describe.skipIf(!liveShopifyEnabled)("live Shopify category UI acceptance matrix", () => {
-  let liveCatalogue: any[] = [];
-
   beforeAll(async () => {
     liveCatalogue = await listProducts({ first: 25 });
+    useLiveCatalogue = true;
     catalogueState.products = liveCatalogue;
   }, 30_000);
 
-  afterAll(() => { catalogueState.products = fixtureCatalogue; });
+  afterAll(() => { useLiveCatalogue = false; catalogueState.products = fixtureCatalogue; });
 
   for (const category of categories) {
     it(`renders the live ${category} route with its actual result state and recovery path`, () => {

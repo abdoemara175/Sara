@@ -24,18 +24,18 @@ After refreshing the project Shopify integration, the live Storefront probe retu
 
 ## Eleven-category acceptance matrix
 
-On 21 August 2026, every `/shop?category=...` route returned HTTP 200 from the live preview. Screenshot captures verified the category title, active filter chip, and **Clear filter** action for all eleven encoded routes. The live Shopify probe returned two active products: **Velvet Blush Duo** in **Make Up** and **Serene Barrier Serum** in **Skin Care**. The remaining categories therefore correctly resolve to the explicit empty-collection recovery state rather than a blank page. A code-verifiable eleven-case UI acceptance matrix renders every category route and asserts the active chip, visible count and matching result or empty-state copy, plus the return route to `/shop`. A second eleven-case matrix now feeds the same UI with `listProducts()` from the actual live Shopify Storefront response and logs the per-category state, producing product results for Make Up and Skin Care and empty recovery for the remaining nine categories.
+On 21 August 2026, every `/shop?category=...` route returned HTTP 200 from the live preview. Screenshot captures verified the category title, active filter chip, and **Clear filter** action for all eleven encoded routes. The live Shopify probe now returns eleven active products, with one product assigned to each storefront category. The code-verifiable eleven-case UI acceptance matrix renders every category route and asserts the active chip, visible count and matching result, plus the return route to `/shop`. The same matrix now feeds the UI through `listProducts()` from the actual live Shopify Storefront response and logs one product result for every category.
 
 | Category | Live catalogue result | Filter behavior | Recovery path |
 |---|---:|---|---|
 | Make Up | 1 product | Selected chip; Velvet Blush Duo result | Clear filter → `/shop` |
 | Skin Care | 1 product | Selected chip; Serene Barrier Serum result | Clear filter → `/shop` |
-| Hair Care | 0 products | Selected chip; clear empty-collection copy | Clear filter → `/shop` |
-| Body Care | 0 products | Selected chip; clear empty-collection copy | Clear filter → `/shop` |
-| Baby Care | 0 products | Selected chip; clear empty-collection copy | Clear filter → `/shop` |
-| Instruments & Devices | 0 products | Selected chip; clear empty-collection copy | Clear filter → `/shop` |
-| Nails & Oral Care | 0 products | Selected chip; clear empty-collection copy | Clear filter → `/shop` |
-| Female Intimate | 0 products | Selected chip; clear empty-collection copy | Clear filter → `/shop` |
-| Shaving Tools | 0 products | Selected chip; clear empty-collection copy | Clear filter → `/shop` |
-| Hair Colors | 0 products | Selected chip; clear empty-collection copy | Clear filter → `/shop` |
-| Other | 0 products | Selected chip; clear empty-collection copy | Clear filter → `/shop` |
+| Hair Care | 1 product | Selected chip; NOURA Repair Ritual Shampoo result | Clear filter → `/shop` |
+| Body Care | 1 product | Selected chip; NOURA Desert Veil Body Lotion result | Clear filter → `/shop` |
+| Baby Care | 1 product | Selected chip; NOURA Little Cloud Gentle Wash result | Clear filter → `/shop` |
+| Instruments & Devices | 1 product | Selected chip; NOURA Cooling Ritual Face Roller result | Clear filter → `/shop` |
+| Nails & Oral Care | 1 product | Selected chip; NOURA Pearl Nail Care Oil result | Clear filter → `/shop` |
+| Female Intimate | 1 product | Selected chip; NOURA Soft Balance Intimate Wash result | Clear filter → `/shop` |
+| Shaving Tools | 1 product | Selected chip; NOURA Smooth Ritual Precision Razor result | Clear filter → `/shop` |
+| Hair Colors | 1 product | Selected chip; NOURA Cocoa Veil Hair Color result | Clear filter → `/shop` |
+| Other | 1 product | Selected chip; NOURA Cotton Cloud Makeup Pads result | Clear filter → `/shop` |

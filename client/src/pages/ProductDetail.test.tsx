@@ -27,6 +27,7 @@ vi.mock("@/components/storefront", () => ({
   StoreHeader: () => null,
   StoreFooter: () => null,
   ProductGrid: () => null,
+  HERO_IMAGE: "https://example.test/hero-fallback.jpg",
   formatEgp: (money: { amount: string }) => `EGP ${money.amount}`,
 }));
 vi.mock("@/lib/trpc", () => ({
@@ -54,5 +55,13 @@ describe("product detail completion flow", () => {
     fireEvent.click(screen.getByRole("button", { name: "Increase quantity" }));
     fireEvent.click(screen.getByRole("button", { name: "Add to Cart" }));
     expect(addItem).toHaveBeenCalledWith("peach", 2);
+  });
+
+  it("uses the editorial fallback image when a newly created product has no Shopify media yet", () => {
+    const existingImages = testProduct.images;
+    testProduct.images = [];
+    render(<ProductDetail handle="velvet-blush-duo" />);
+    expect(screen.getByAltText("Velvet Blush Duo").getAttribute("src")).toBe("https://example.test/hero-fallback.jpg");
+    testProduct.images = existingImages;
   });
 });

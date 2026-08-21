@@ -110,3 +110,7 @@
 - [x] Document the live results matrix for every category, distinguishing available-product results from empty-category recovery states.
 - [x] Add a code-verifiable UI acceptance test that renders every category route and asserts active state, count/result or empty copy, and clear-filter behavior.
 - [x] Derive the category UI acceptance matrix from the live Shopify catalogue and log the per-category result state for verification.
+- [x] Review the current Shopify catalogue and define a balanced demo distribution across NOURA categories.
+- [x] Create publishable sample products with clear titles, prices, descriptions, product types, tags, and variants where useful.
+- [x] Verify the new live products populate their intended category filters and product cards without disrupting cart behavior.
+- [x] Provide a safe product-detail image fallback for newly created Shopify products that do not yet have media attached.
