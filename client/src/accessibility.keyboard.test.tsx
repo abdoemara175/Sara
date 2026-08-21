@@ -177,6 +177,8 @@ describe("real storefront keyboard navigation", () => {
     const mobileNavigation = document.getElementById("mobile-store-navigation");
     expect(mobileNavigation).toBeTruthy();
     expect(mobileNavigation?.querySelector('a[href="/account"]')).toBeTruthy();
+    expect(mobileNavigation?.querySelector('a[href="/admin"]')).toBeTruthy();
+    expect(mobileNavigation?.querySelector('a[href="/operations"]')).toBeTruthy();
     expect(mobileNavigation?.querySelector('a[href="/shop?category=Skin%20Care"]')).toBeTruthy();
   });
 
@@ -226,5 +228,56 @@ describe("real storefront keyboard navigation", () => {
     expect(document.activeElement).toBe(screen.getByLabelText("Remove Velvet Blush Duo"));
     await user.tab();
     expect(document.activeElement).toBe(screen.getByRole("button", { name: "Secure checkout" }));
+  });
+
+  it("opens and closes quick view, then adds the selected product from the modal", async () => {
+    const user = userEvent.setup();
+    const product = {
+      id: "quick-view-product",
+      handle: "quick-view-serum",
+      title: "Quick View Serum",
+      productType: "Skin Care",
+      description: "A focused test product.",
+      images: [],
+      priceRange: { min: { amount: "500", currencyCode: "EGP" }, max: { amount: "500", currencyCode: "EGP" } },
+      options: [],
+      variants: [{ id: "quick-view-variant", title: "Default Title", availableForSale: true, price: { amount: "500", currencyCode: "EGP" }, compareAtPrice: null, selectedOptions: [] }],
+      tags: [],
+    } as any;
+
+    render(<ProductGrid products={[product]} />);
+    await user.click(screen.getByRole("button", { name: "Quick view" }));
+    expect(screen.getByText("A focused test product.")).toBeTruthy();
+
+    await user.click(screen.getAllByRole("button", { name: "Add to Cart" })[1]!);
+    expect(actions.addItem).toHaveBeenCalledWith("quick-view-variant");
+
+    await user.click(screen.getAllByRole("button", { name: "Close quick view" })[1]!);
+    expect(screen.queryByText("A focused test product.")).toBeNull();
+
+    await user.click(screen.getByRole("button", { name: "Quick view" }));
+    await user.click(screen.getAllByRole("button", { name: "Close quick view" })[0]!);
+    expect(screen.queryByText("A focused test product.")).toBeNull();
+  });
+
+  it("invokes live cart drawer actions for quantity, removal, close, and checkout", async () => {
+    const user = userEvent.setup();
+    cartState.mockReturnValue({ cart, isOpen: true, loading: false, itemCount: 1, ...actions });
+    render(<CartDrawer />);
+
+    await user.click(screen.getByLabelText("Increase Velvet Blush Duo quantity"));
+    expect(actions.updateQuantity).toHaveBeenCalledWith("line-1", 2);
+
+    await user.click(screen.getByLabelText("Decrease Velvet Blush Duo quantity"));
+    expect(actions.updateQuantity).toHaveBeenCalledWith("line-1", 0);
+
+    await user.click(screen.getByLabelText("Remove Velvet Blush Duo"));
+    expect(actions.removeItem).toHaveBeenCalledWith("line-1");
+
+    await user.click(screen.getByLabelText("Close cart panel"));
+    expect(actions.closeCart).toHaveBeenCalled();
+
+    await user.click(screen.getByRole("button", { name: "Secure checkout" }));
+    expect(actions.proceedToCheckout).toHaveBeenCalled();
   });
 });

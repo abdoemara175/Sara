@@ -163,3 +163,15 @@
 - [ ] Collect the selected online payment provider, account-readiness status, Egyptian shipping zones, rates, and delivery estimates before any Shopify settings change.
 - [ ] Apply and verify only the owner-approved Shopify payment and Egyptian shipping settings without initiating a charge or order.
 - [ ] Resume payment and shipping activation only after the owner confirms financial readiness and supplies the approved provider and delivery details.
+- [x] Audit every public and protected route for a valid destination, correct selected state, useful recovery path, and absence of dead ends.
+- [x] Audit all visible buttons, links, category filters, tabs, modals, and navigation controls for working behavior without initiating payment.
+- [x] Verify responsive UI quality on desktop and mobile for the storefront, product flow, account, admin dashboard, and NOURA Operations workspace.
+- [x] Fix every confirmed UI, navigation, or interaction defect automatically and add regression coverage where appropriate.
+- [x] Expose the protected Admin and Operations routes in the administrator mobile navigation and add a regression test for their destinations.
+- [x] Add an accessible name to the icon-only quick-view close button and verify both close controls dismiss the modal.
+- [x] Add non-destructive UI regression coverage for administrator user-management controls: create, password reset, role, active status, and delete.
+- [x] Run the full automated quality gate, inspect browser and server logs, and publish a complete audit record.
+- [x] Audit every public and protected route for a valid destination, correct selected state, useful recovery path, and absence of dead ends.
+- [x] Audit all visible buttons, links, category filters, tabs, modals, and navigation controls for working behavior without initiating payment.
+- [x] Verify responsive UI quality on desktop and mobile for the storefront, product flow, account, admin dashboard, and NOURA Operations workspace.
+- [x] Run the full automated quality gate, inspect browser/server logs, fix confirmed audit findings, and publish a complete audit record.
