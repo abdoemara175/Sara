@@ -281,6 +281,28 @@ export type ListProductsOptions = {
   collectionHandle?: string;
 };
 
+const CATALOG_CACHE_TTL_MS = 5 * 60 * 1000;
+let catalogCache: { products: Product[]; expiresAt: number } | null = null;
+
+function cacheCatalog(products: Product[]) {
+  catalogCache = { products, expiresAt: Date.now() + CATALOG_CACHE_TTL_MS };
+}
+
+function getCachedCatalog() {
+  if (!catalogCache || catalogCache.expiresAt < Date.now()) return null;
+  return catalogCache.products;
+}
+
+function isTransientStorefrontFailure(error: unknown) {
+  return error instanceof TRPCError && error.message === "Shopify Storefront API is unreachable";
+}
+
+function cacheProduct(product: Product) {
+  const current = getCachedCatalog() ?? [];
+  const withoutCurrent = current.filter(item => item.id !== product.id);
+  cacheCatalog([...withoutCurrent, product]);
+}
+
 export async function listProducts(
   options: ListProductsOptions = {}
 ): Promise<Product[]> {
@@ -304,33 +326,55 @@ export async function listProducts(
     return data.collection.products.edges.map(e => normalizeProduct(e.node));
   }
 
-  const data = await storefrontFetch<{ products: Edges<RawProduct> }>(
-    `${PRODUCT_FRAGMENT}
-     query listProducts($first: Int!) {
-       products(first: $first, sortKey: TITLE) {
-         edges { node { ...ProductFields } }
-       }
-     }`,
-    { first }
-  );
-  return data.products.edges.map(e => normalizeProduct(e.node));
+  try {
+    const data = await storefrontFetch<{ products: Edges<RawProduct> }>(
+      `${PRODUCT_FRAGMENT}
+       query listProducts($first: Int!) {
+         products(first: $first, sortKey: TITLE) {
+           edges { node { ...ProductFields } }
+         }
+       }`,
+      { first }
+    );
+    const products = data.products.edges.map(e => normalizeProduct(e.node));
+    cacheCatalog(products);
+    return products;
+  } catch (error) {
+    const cached = getCachedCatalog();
+    if (cached && isTransientStorefrontFailure(error)) {
+      console.warn("[Shopify] Serving cached catalogue after transient Storefront failure");
+      return cached.slice(0, first);
+    }
+    throw error;
+  }
 }
 
 export async function getProductByHandle(handle: string): Promise<Product> {
-  const data = await storefrontFetch<{ productByHandle: RawProduct | null }>(
-    `${PRODUCT_FRAGMENT}
-     query productByHandle($handle: String!) {
-       productByHandle(handle: $handle) { ...ProductFields }
-     }`,
-    { handle }
-  );
-  if (!data.productByHandle) {
-    throw new TRPCError({
-      code: "NOT_FOUND",
-      message: `Product "${handle}" not found`,
-    });
+  try {
+    const data = await storefrontFetch<{ productByHandle: RawProduct | null }>(
+      `${PRODUCT_FRAGMENT}
+       query productByHandle($handle: String!) {
+         productByHandle(handle: $handle) { ...ProductFields }
+       }`,
+      { handle }
+    );
+    if (!data.productByHandle) {
+      throw new TRPCError({
+        code: "NOT_FOUND",
+        message: `Product "${handle}" not found`,
+      });
+    }
+    const product = normalizeProduct(data.productByHandle);
+    cacheProduct(product);
+    return product;
+  } catch (error) {
+    const cached = getCachedCatalog()?.find(product => product.handle === handle);
+    if (cached && isTransientStorefrontFailure(error)) {
+      console.warn("[Shopify] Serving cached product after transient Storefront failure");
+      return cached;
+    }
+    throw error;
   }
-  return normalizeProduct(data.productByHandle);
 }
 
 export async function listCollections(first: number = 10): Promise<Collection[]> {

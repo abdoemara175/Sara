@@ -1,11 +1,12 @@
 import { Link } from "wouter";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Banknote, ChevronDown, Facebook, Heart, Instagram, MapPin, Menu, MessageCircle,
   Minus, Music2, Plus, Search, ShieldCheck, ShoppingBag, Sparkles, Trash2, Truck, X,
 } from "lucide-react";
 import type { Money, Product } from "@shared/commerce/types";
 import { useCart } from "@/contexts/CartContext";
+import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
 
 export const HERO_IMAGE = "/manus-storage/beauty-hero-reference_546efc38.png";
@@ -30,6 +31,7 @@ export function StoreHeader() {
   const [query, setQuery] = useState("");
   const [debounced, setDebounced] = useState("");
   const { itemCount, openCart } = useCart();
+  const { user } = useAuth();
   const { data: searchData, isFetching } = trpc.search.products.useQuery(
     { query: debounced, first: 5 },
     { enabled: debounced.trim().length > 1 }
@@ -57,6 +59,8 @@ export function StoreHeader() {
           </button>
           <a href="#featured">Featured</a>
           <a href="#about">About</a>
+          <Link href="/account">Account</Link>
+          {user?.role === "admin" && <Link href="/admin" className="text-[#a76c45]">Admin</Link>}
         </nav>
         <div className="relative hidden min-w-0 max-w-md flex-1 lg:block">
           <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[#b2794f]" size={17} />
@@ -122,14 +126,14 @@ export function CartDrawer() {
       <aside className="relative flex h-full w-full max-w-md flex-col bg-[#fffdf8] shadow-2xl">
         <div className="flex items-center justify-between border-b border-stone-200 px-6 py-5">
           <div><p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#a76c45]">Your selection</p><h2 className="font-serif text-2xl font-black">Shopping bag</h2></div>
-          <button onClick={closeCart} className="grid h-9 w-9 place-items-center rounded-full hover:bg-stone-100"><X size={19} /></button>
+          <button onClick={closeCart} aria-label="Close cart panel" className="grid h-9 w-9 place-items-center rounded-full hover:bg-stone-100"><X size={19} /></button>
         </div>
         <div className="flex-1 overflow-y-auto px-6 py-5">
           {!cart?.items.length ? <div className="grid h-full place-items-center text-center"><ShoppingBag size={38} strokeWidth={1.2} className="mb-3 text-stone-300" /><p className="font-serif text-xl">Your bag is waiting.</p><p className="mt-1 text-sm text-stone-500">Explore original beauty essentials made for your routine.</p></div> : cart.items.map(item => (
             <article className="flex gap-3 border-b border-stone-100 py-4" key={item.lineId}>
               <img src={item.image?.url || HERO_IMAGE} alt="" className="h-20 w-20 rounded-xl object-cover" />
               <div className="min-w-0 flex-1"><p className="font-semibold text-stone-800">{item.productTitle}</p>{item.variantTitle !== "Default Title" && <p className="mt-0.5 text-xs text-stone-500">{item.variantTitle}</p>}<p className="mt-1 text-sm font-bold text-[#a76c45]">{formatEgp(item.lineTotal)}</p>
-                <div className="mt-3 flex items-center justify-between"><div className="flex items-center rounded-full border border-stone-200"><button disabled={loading} onClick={() => updateQuantity(item.lineId, item.quantity - 1)} className="grid h-7 w-7 place-items-center"><Minus size={13} /></button><span className="w-6 text-center text-xs font-bold">{item.quantity}</span><button disabled={loading} onClick={() => updateQuantity(item.lineId, item.quantity + 1)} className="grid h-7 w-7 place-items-center"><Plus size={13} /></button></div><button disabled={loading} onClick={() => removeItem(item.lineId)} className="p-2 text-stone-400 hover:text-rose-600"><Trash2 size={15} /></button></div>
+                <div className="mt-3 flex items-center justify-between"><div className="flex items-center rounded-full border border-stone-200"><button disabled={loading} onClick={() => updateQuantity(item.lineId, item.quantity - 1)} aria-label={`Decrease ${item.productTitle} quantity`} className="grid h-7 w-7 place-items-center"><Minus size={13} /></button><span className="w-6 text-center text-xs font-bold" aria-live="polite">{item.quantity}</span><button disabled={loading} onClick={() => updateQuantity(item.lineId, item.quantity + 1)} aria-label={`Increase ${item.productTitle} quantity`} className="grid h-7 w-7 place-items-center"><Plus size={13} /></button></div><button disabled={loading} onClick={() => removeItem(item.lineId)} aria-label={`Remove ${item.productTitle}`} className="p-2 text-stone-400 hover:text-rose-600"><Trash2 size={15} /></button></div>
               </div>
             </article>
           ))}

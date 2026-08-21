@@ -7,6 +7,8 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 import ProductDetail from "./pages/ProductDetail";
 import Shop from "./pages/Shop";
+import Account from "./pages/Account";
+import AdminDashboard from "./pages/AdminDashboard";
 
 function ProductRoute() {
   const [, params] = useRoute("/product/:handle");
@@ -14,7 +16,7 @@ function ProductRoute() {
 }
 
 function Router() {
-  return <Switch><Route path="/" component={Home} /><Route path="/shop" component={Shop} /><Route path="/product/:handle" component={ProductRoute} /><Route path="/404" component={NotFound} /><Route component={NotFound} /></Switch>;
+  return <Switch><Route path="/" component={Home} /><Route path="/shop" component={Shop} /><Route path="/account" component={Account} /><Route path="/admin" component={AdminDashboard} /><Route path="/product/:handle" component={ProductRoute} /><Route path="/404" component={NotFound} /><Route component={NotFound} /></Switch>;
 }
 
 export default function App() {

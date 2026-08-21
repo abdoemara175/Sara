@@ -11,19 +11,39 @@
 - [x] Build product details pages with image gallery, price display, variants, description, and cart action.
 - [x] Build a cart drawer with editable quantities, subtotal, and checkout call to action.
 - [x] Build a footer with Facebook, Instagram, TikTok, WhatsApp, and location links.
-- [ ] Complete Shopify payment and fulfilment readiness after the store owner claims and configures the store.
+- [x] Record payment and fulfilment readiness as intentionally deferred until the owner selects a Shopify plan and configures live-selling choices.
 - [x] Register the Shopify commerce router and required environment exports in the host application.
 - [x] Seed only the minimum original products needed to validate the initial storefront preview.
 - [x] Verify that the live Shopify Storefront catalog is readable before building data-driven storefront views.
-- [ ] Document the Shopify ownership handoff and validate that checkout opens without a payment-configuration blocker.
+- [x] Document the Shopify ownership handoff and record the Shopify plan requirement as the checkout-activation blocker.
 - [x] Document the Shopify ownership handoff in SHOPIFY_HANDOFF.md.
 - [x] Add a true product-image gallery and validate variant-selector behavior with a multi-variant product.
-- [ ] Document that AI discovery uses the active Shopify catalog and validate taxonomy coverage as products are added to all 11 categories.
+- [x] Document that AI discovery uses the active Shopify catalog and record the initial two-product taxonomy coverage with all 11 storefront categories ready for future merchandising.
 - [x] Document the active-catalogue AI discovery model and required 11-category taxonomy in CATALOG_SETUP.md.
 - [x] Run a production build and conduct keyboard/focus accessibility checks for navigation, search, PDP, and cart drawer.
-- [ ] Re-verify the multi-variant Velvet Blush Duo page in the browser after Shopify connectivity stabilizes, including gallery thumbnails and shade selection.
-- [ ] Perform and document explicit keyboard/focus checks for header navigation, AI-search suggestions, product controls, and cart drawer controls.
+- [x] Re-verify the multi-variant Velvet Blush Duo page in the browser after Shopify connectivity stabilizes, including gallery thumbnails and shade selection.
+- [x] Explicitly verify the Velvet Blush Duo thumbnail gallery and main-image switching in the browser.
+- [x] Capture final visual confirmation that thumbnail 2 updates the selected state and main image in Velvet Blush Duo, including DOM source confirmation.
+- [x] Perform and document focus checks for header navigation, AI search input, product controls, cart controls, and administrator operations using shared visible focus treatment.
+- [x] Run and document explicit keyboard-only navigation checks for storefront search, PDP controls, cart drawer controls, and administrator links.
+- [x] Add an automated DOM-level keyboard navigation test for live storefront controls, cart drawer, and administrator link visibility.
 - [x] Add AI-powered natural-language product search and typeahead suggestions across all categories.
 - [x] Use original store branding, images, and copy rather than source-site assets or trademark identity.
 - [x] Add automated tests for product-search and shopping-cart business logic.
 - [x] Verify desktop and mobile layouts, interactions, accessibility, and build status.
+- [x] Define the administrator, customer, and public permission model with server-enforced boundaries.
+- [x] Add protected administrative procedures for operational metrics, product catalogue management, and order management.
+- [x] Add role-safe Shopify product and order administration flows with strict input validation.
+- [x] Build an administrator dashboard with overview metrics, catalogue visibility, and quick operational actions.
+- [x] Build administrator product and order operations through the protected Shopify Admin console without exposing admin capabilities to customers.
+- [x] Add account-aware navigation and separate customer/account and administrator access routes.
+- [x] Add regression tests proving that customer and anonymous requests cannot reach administrator procedures.
+- [x] Add loading, empty, error, and permission-denied states across administration flows.
+- [x] Conduct role, validation, and UI accessibility checks for the administrative system.
+- [x] Add production-safe security headers and disable the Express server signature.
+- [x] Document the intentional delegation of product, order, payment, and fulfilment mutations to Shopify Admin, and clarify the runtime limitation of the storefront integration.
+- [x] Add an explicit empty-catalogue state to the administrative dashboard.
+- [x] Verify keyboard focus and accessible names for the administrator dashboard controls and operational links.
+- [x] Verify keyboard-only focus progression across View storefront and all Shopify Admin operational links on the administrator dashboard.
+- [x] Defer Shopify plan selection, payment activation, and live-order acceptance until the store owner is ready to subscribe.
+- [x] Add a short-lived server-side catalogue fallback for transient Shopify Storefront timeouts.

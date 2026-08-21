@@ -133,6 +133,15 @@
   input[type="radio"]:not(:disabled) {
     @apply cursor-pointer;
   }
+
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline: 3px solid #a76c45;
+    outline-offset: 3px;
+  }
 }
 
 @layer components {

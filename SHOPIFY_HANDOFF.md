@@ -13,3 +13,9 @@ The checkout button intentionally opens Shopify’s hosted checkout. A live paym
 | Shipping | Configure Egypt zones, rates, and delivery estimates. | Buyers receive accurate delivery charges and options. |
 | Fulfilment | Add fulfilment location and inventory quantities. | Buyable products can be packed and dispatched. |
 | Final validation | Place one owner-approved test order. | Checkout, order creation, notification, and fulfilment path are confirmed end to end. |
+
+## Reviewed configuration status
+
+The owner has verified access to Shopify Admin. The store currently has a default shipping profile for all products, one fulfilment location, and two shipping zones. Checkout uses email as the customer contact method and has order tracking enabled; mandatory customer sign-in is not enabled. The customer-account sign-in link is enabled, while self-serve returns are disabled.
+
+> **Activation hold:** The owner chose to defer the Shopify plan selection. No Shopify plan, payment provider, shipping rate, or fulfilment setting was changed. The storefront and administrator dashboard remain ready for catalogue and operational setup, but live payment collection and real order acceptance remain unavailable until a Shopify plan is selected and the owner explicitly configures those choices.
