@@ -1,8 +1,8 @@
 import { Link, useLocation } from "wouter";
 import React, { useEffect, useState } from "react";
 import {
-  Banknote, ChevronDown, Facebook, Heart, Instagram, MapPin, Menu, MessageCircle,
-  Minus, Music2, Plus, Search, ShieldCheck, ShoppingBag, Sparkles, Trash2, Truck, X,
+  Banknote, ChevronDown, Heart, Menu, Minus, Plus, Search, ShieldCheck, ShoppingBag,
+  Sparkles, Trash2, Truck, X,
 } from "lucide-react";
 import type { Money, Product } from "@shared/commerce/types";
 import { useCart } from "@/contexts/CartContext";
@@ -62,8 +62,8 @@ export function StoreHeader() {
           <button className="flex items-center gap-1" onClick={() => setMegaOpen(!megaOpen)} aria-expanded={megaOpen}>
             Categories <ChevronDown size={13} />
           </button>
-          <a href="#featured">Featured</a>
-          <a href="#about">About</a>
+          <a href="/#featured">Featured</a>
+          <a href="/#about">About</a>
           <Link href="/account" className={location.startsWith("/account") ? "text-[#a76c45]" : "hover:text-[#a76c45]"}>Account</Link>
           {user?.role === "admin" && !user?.requiresPasswordChange && <Link href="/admin" className="text-[#a76c45]">Admin</Link>}
         </nav>
@@ -177,7 +177,30 @@ export function ProductGrid({ products, emptyMessage }: { products: Product[]; e
 }
 
 export function StoreFooter() {
-  return <footer id="about" className="mt-24 bg-stone-900 text-stone-200"><div className="container grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1fr]"><div><p className="font-serif text-3xl font-black tracking-[-0.09em] text-white">NOURA<span className="text-[#d5a070]">.</span></p><p className="mt-4 max-w-sm text-sm leading-6 text-stone-400">A considered beauty storefront designed for easy discovery, dependable delivery, and joyful daily rituals.</p></div><div><p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#d5a070]">Explore</p><div className="mt-4 grid gap-2 text-sm text-stone-400"><Link href="/shop">All products</Link><Link href={shopHref("Skin Care")}>Skin care</Link><Link href={shopHref("Make Up")}>Make up</Link><a href="#featured">Featured picks</a></div></div><div><p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#d5a070]">Follow us</p><div className="mt-4 flex flex-wrap gap-3"><a href="https://facebook.com" target="_blank" rel="noreferrer" aria-label="Facebook" className="grid h-9 w-9 place-items-center rounded-full bg-white/10 hover:bg-[#b2794f]"><Facebook size={16} /></a><a href="https://instagram.com" target="_blank" rel="noreferrer" aria-label="Instagram" className="grid h-9 w-9 place-items-center rounded-full bg-white/10 hover:bg-[#b2794f]"><Instagram size={16} /></a><a href="https://tiktok.com" target="_blank" rel="noreferrer" aria-label="TikTok" className="grid h-9 w-9 place-items-center rounded-full bg-white/10 hover:bg-[#b2794f]"><Music2 size={16} /></a><a href="https://wa.me" target="_blank" rel="noreferrer" aria-label="WhatsApp" className="grid h-9 w-9 place-items-center rounded-full bg-white/10 hover:bg-[#b2794f]"><MessageCircle size={16} /></a><a href="https://maps.google.com" target="_blank" rel="noreferrer" aria-label="Location" className="grid h-9 w-9 place-items-center rounded-full bg-white/10 hover:bg-[#b2794f]"><MapPin size={16} /></a></div></div></div><div className="border-t border-white/10"><div className="container flex flex-col gap-2 py-5 text-[10px] uppercase tracking-[0.12em] text-stone-500 sm:flex-row sm:justify-between"><span>© 2026 Noura Beauty Store</span><span>Egypt · Considered beauty rituals</span></div></div></footer>;
+  return (
+    <footer id="about" className="mt-24 bg-stone-900 text-stone-200">
+      <div className="container grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1fr]">
+        <div>
+          <p className="font-serif text-3xl font-black tracking-[-0.09em] text-white">NOURA<span className="text-[#d5a070]">.</span></p>
+          <p className="mt-4 max-w-sm text-sm leading-6 text-stone-400">A considered beauty storefront designed for easy discovery, dependable delivery, and joyful daily rituals.</p>
+        </div>
+        <div>
+          <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#d5a070]">Explore</p>
+          <div className="mt-4 grid gap-2 text-sm text-stone-400">
+            <Link href="/shop">All products</Link>
+            <Link href={shopHref("Skin Care")}>Skin care</Link>
+            <Link href={shopHref("Make Up")}>Make up</Link>
+            <a href="/#featured">Featured picks</a>
+          </div>
+        </div>
+        <div>
+          <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#d5a070]">Official contact channels</p>
+          <p className="mt-4 max-w-xs text-sm leading-6 text-stone-400">Social, WhatsApp, and location links will appear here after the store owner confirms the official NOURA destinations.</p>
+        </div>
+      </div>
+      <div className="border-t border-white/10"><div className="container flex flex-col gap-2 py-5 text-[10px] uppercase tracking-[0.12em] text-stone-500 sm:flex-row sm:justify-between"><span>© 2026 Noura Beauty Store</span><span>Egypt · Considered beauty rituals</span></div></div>
+    </footer>
+  );
 }
 
 export function TrustBar() {

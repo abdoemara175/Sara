@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { ArrowRight, ChevronLeft, ChevronRight, Clock3, Sparkles } from "lucide-react";
 import { Link } from "wouter";
 import { CartDrawer, categories, HERO_IMAGE, ProductGrid, shopHref, StoreFooter, StoreHeader, TrustBar } from "@/components/storefront";

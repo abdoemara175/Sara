@@ -1,19 +1,24 @@
 import { ArrowRight } from "lucide-react";
-import { useMemo } from "react";
+import React, { useMemo } from "react";
 import { Link, useLocation } from "wouter";
 import { CartDrawer, categories, ProductGrid, shopHref, StoreFooter, StoreHeader } from "@/components/storefront";
 import { trpc } from "@/lib/trpc";
+import type { Product } from "@shared/commerce/types";
 
 export function categoryFromSearch(search: string) {
   const category = new URLSearchParams(search).get("category");
   return categories.find(item => item === category) || null;
 }
 
+export function filterProductsByCategory(products: Product[], category: string | null) {
+  return category ? products.filter(product => product.productType === category || product.tags.includes(category)) : products;
+}
+
 export default function Shop() {
   const [location] = useLocation();
   const { data: products = [], isLoading } = trpc.commerce.products.list.useQuery();
   const selectedCategory = useMemo(() => categoryFromSearch(typeof window === "undefined" ? "" : window.location.search), [location]);
-  const filteredProducts = useMemo(() => selectedCategory ? products.filter(product => product.productType === selectedCategory || product.tags.includes(selectedCategory)) : products, [products, selectedCategory]);
+  const filteredProducts = useMemo(() => filterProductsByCategory(products, selectedCategory), [products, selectedCategory]);
   const productCountLabel = `${filteredProducts.length} ${filteredProducts.length === 1 ? "product" : "products"} shown`;
 
   return (

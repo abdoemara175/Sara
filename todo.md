@@ -94,3 +94,14 @@
 - [x] Supersede the unavailable generic Shopify authorization card after the project-level Shopify integration refresh restored the production Storefront connection.
 - [x] Audit the newly refreshed Shopify project integration against the existing store and catalogue before accepting it as the production connection.
 - [x] Restore Shopify environment variables after mocked commerce tests so the live Shopify smoke suite uses its real credential.
+- [x] Audit every public route, primary navigation tab, category link, and footer link for a valid destination or explicit in-page behavior.
+- [x] Verify all 11 category filters against the live catalogue, including zero-product recovery states and clear-filter behavior.
+- [x] Verify product-detail variants, quantity controls, cart mutations, checkout handoff, account, and administrator route boundaries as customer completion flows.
+- [x] Identify and remove or replace any interaction that is decorative but appears actionable without a useful result.
+- [x] Add regression tests for any route, filter, or completion-flow gap found during acceptance testing.
+- [x] Handle rejected local sign-in and password-change mutations inside the account form to avoid unhandled browser promise rejections.
+- [x] Replace generic footer social, WhatsApp, and location destinations with explicit non-actionable contact guidance until the owner supplies real NOURA links.
+- [x] Run and document live route checks for all eleven category URLs, including selected state, resulting count, empty recovery copy, and clear-filter route.
+- [x] Document the live results matrix for every category, distinguishing available-product results from empty-category recovery states.
+- [x] Add a code-verifiable UI acceptance test that renders every category route and asserts active state, count/result or empty copy, and clear-filter behavior.
+- [x] Derive the category UI acceptance matrix from the live Shopify catalogue and log the per-category result state for verification.
