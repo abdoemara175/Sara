@@ -77,7 +77,7 @@
 - [x] Audit the Sara repository state and preserve the complete application source and documentation during synchronization.
 - [x] Add a static GitHub Pages landing page that clearly links to the managed full-stack storefront and explains its server-side requirements.
 - [x] Enable GitHub Pages for the static landing page and verify the source repository and Pages URL after publication.
-- [ ] Document and verify the GitHub Pages root-source redirect approach after the repository uses main plus `/` rather than a direct docs source.
+- [x] Document and verify the GitHub Pages root-source redirect approach after the repository uses main plus `/` rather than a direct docs source.
 - [x] Add a root Pages entry point that redirects to the maintained docs overview when GitHub Pages uses the repository root source.
 - [x] Defer GitHub synchronization and GitHub Pages publishing until the owner explicitly confirms the final upload.
 - [x] Validate the cart management and checkout handoff with live Storefront cart operations and application-state regression coverage after connected-browser interaction timed out.
