@@ -39,6 +39,10 @@ export const adminProcedure = t.procedure.use(
       throw new TRPCError({ code: "FORBIDDEN", message: NOT_ADMIN_ERR_MSG });
     }
 
+    if (ctx.user.mustChangePassword) {
+      throw new TRPCError({ code: "FORBIDDEN", message: "Change the temporary password before accessing administration." });
+    }
+
     return next({
       ctx: {
         ...ctx,

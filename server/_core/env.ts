@@ -9,4 +9,5 @@ export const ENV = {
   forgeApiKey: process.env.BUILT_IN_FORGE_API_KEY ?? "",
   shopifyStoreDomain: process.env.SHOPIFY_STORE_DOMAIN ?? "",
   shopifyStorefrontApiAccessToken: process.env.SHOPIFY_STOREFRONT_API_ACCESS_TOKEN ?? "",
+  localAdminBootstrapPassword: process.env.LOCAL_ADMIN_BOOTSTRAP_PASSWORD ?? "",
 };

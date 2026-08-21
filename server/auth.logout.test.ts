@@ -42,6 +42,38 @@ function createAuthContext(): { ctx: TrpcContext; clearedCookies: CookieCall[] }
 }
 
 describe("auth.logout", () => {
+  it("returns only the deliberate public identity projection from auth.me", async () => {
+    const { ctx } = createAuthContext();
+    ctx.user = {
+      ...ctx.user!,
+      openId: "internal-open-id",
+      passwordHash: "scrypt$server-only-password-hash",
+      mustChangePassword: true,
+      isActive: true,
+      failedLoginCount: 4,
+      lockedUntil: new Date(),
+      passwordUpdatedAt: new Date(),
+      sessionVersion: 7,
+    };
+
+    const result = await appRouter.createCaller(ctx).auth.me();
+
+    expect(result).toEqual({
+      id: 1,
+      name: "Sample User",
+      email: "sample@example.com",
+      loginMethod: "manus",
+      role: "user",
+      requiresPasswordChange: true,
+    });
+    expect(result).not.toHaveProperty("passwordHash");
+    expect(result).not.toHaveProperty("sessionVersion");
+    expect(result).not.toHaveProperty("failedLoginCount");
+    expect(result).not.toHaveProperty("lockedUntil");
+    expect(result).not.toHaveProperty("mustChangePassword");
+    expect(result).not.toHaveProperty("openId");
+  });
+
   it("clears the session cookie and reports success", async () => {
     const { ctx, clearedCookies } = createAuthContext();
     const caller = appRouter.createCaller(ctx);

@@ -47,3 +47,20 @@
 - [x] Verify keyboard-only focus progression across View storefront and all Shopify Admin operational links on the administrator dashboard.
 - [x] Defer Shopify plan selection, payment activation, and live-order acceptance until the store owner is ready to subscribe.
 - [x] Add a short-lived server-side catalogue fallback for transient Shopify Storefront timeouts.
+- [x] Review the existing OAuth session model and user schema before adding local credentials.
+- [x] Add a secure password-hash field, active-user state, and migration for local account credentials.
+- [x] Provision abdoemara.175@gmail.com as a full administrator using the supplied initial password hash and require password rotation.
+- [x] Add local sign-in, session issuance, sign-out, and password-change server procedures with rate-safe validation.
+- [x] Build email/password sign-in and forced password-change UI flows.
+- [x] Explicitly validate that the shared sign-out flow clears a local email/password session.
+- [x] Add a local-auth regression test proving protected administration is inaccessible after local sign-out.
+- [x] Add an end-to-end local-session test that verifies the issued session authorizes admin access before logout and is rejected after its cookie is cleared.
+- [x] Add server-side session-version invalidation so a copied session token is rejected after sign-out.
+- [x] Add protected administrator user management for creating, changing roles, disabling, and re-enabling users.
+- [x] Prevent removal, deactivation, or demotion of the last active administrator.
+- [x] Add tests for password handling, local sign-in, session protection, user-role enforcement, and last-admin safeguards.
+- [x] Verify the administrative user flow in the browser without exposing password material.
+- [x] Resolve the live admin dashboard loading state and verify visible catalogue and user-management controls after administrator sign-in.
+- [x] Sanitize client-facing authentication responses to exclude password hashes, session versions, lockout counters, and other server-only authentication metadata.
+- [x] Add regression coverage proving authentication responses do not disclose server-only credential metadata.
+- [x] Isolate session-revocation tests from the operational administrator account so test execution cannot alter its password state.

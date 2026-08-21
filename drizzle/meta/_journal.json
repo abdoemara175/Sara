@@ -8,6 +8,20 @@
       "when": 1787272249381,
       "tag": "0000_secret_peter_parker",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1787303698778,
+      "tag": "0001_aberrant_captain_flint",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1787304389392,
+      "tag": "0002_slippery_runaways",
+      "breakpoints": true
     }
   ]
 }
