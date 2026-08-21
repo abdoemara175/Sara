@@ -43,17 +43,24 @@ describe("NOURA Operations workspace", () => {
     expect(screen.getByText("One calm place to run the store.")).toBeTruthy();
     await user.click(screen.getByRole("button", { name: "Catalogue" }));
     expect(screen.getByText("Serene Barrier Serum")).toBeTruthy();
+    expect(screen.getByText("Live storefront read")).toBeTruthy();
+    expect(screen.getByText(/Titles, price, category, media, inventory, and publication are edited in Shopify/)).toBeTruthy();
     expect(screen.getByRole("link", { name: "Open products" }).getAttribute("href")).toBe("https://noura-test.myshopify.com/admin/products");
 
     await user.click(screen.getByRole("button", { name: "Offers" }));
     expect(screen.getByText("Offers live in Shopify")).toBeTruthy();
+    expect(screen.getByText(/does not mirror active codes into the storefront/)).toBeTruthy();
     expect(screen.getByRole("link", { name: "Open discounts" }).getAttribute("href")).toBe("https://noura-test.myshopify.com/admin/discounts");
 
     await user.click(screen.getByRole("button", { name: "Orders" }));
     expect(screen.getByText("No copied order data")).toBeTruthy();
+    expect(screen.getByText(/payment status, addresses, and fulfilment remain exclusively in Shopify/)).toBeTruthy();
+    expect(screen.getByText(/intentional customer-data protection/)).toBeTruthy();
     expect(screen.getByRole("link", { name: "Open orders" }).getAttribute("href")).toBe("https://noura-test.myshopify.com/admin/orders");
 
     await user.click(screen.getByRole("button", { name: "Settings" }));
+    expect(screen.getByText(/NOURA never handles card details/)).toBeTruthy();
+    expect(screen.getByText(/Set Egyptian zones, rates, delivery estimates/)).toBeTruthy();
     expect(screen.getByRole("link", { name: "Open payments" }).getAttribute("href")).toBe("https://noura-test.myshopify.com/admin/settings/payments");
     expect(screen.getByRole("link", { name: "Open shipping" }).getAttribute("href")).toBe("https://noura-test.myshopify.com/admin/settings/shipping");
   });

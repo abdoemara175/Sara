@@ -129,7 +129,8 @@
 - [x] Provide protected catalogue-management access for product creation, category assignment, price, compare-at sale price, and publication state through Shopify Admin.
 - [x] Provide protected discount management through Shopify Admin and customer-facing sale-price presentation without fabricating reviews or promotional claims.
 - [ ] Build a substantive read-only NOURA orders workspace with live Shopify order, payment, and fulfilment visibility plus empty/error states and secure Admin handoff.
-- [ ] Add automated and documented non-destructive verification for administrator product, discount, and order workflows beyond link-presence tests; the currently authorized Shopify operational channel intentionally permits only direct read checks.
+- [ ] Add automated and documented non-destructive verification for live Shopify product, discount, and order reads; the currently authorized Shopify operational channel intentionally permits only direct read checks.
+- [x] Add a durable regression test for the protected catalogue, offer, order, payment, and shipping workflow states beyond link-presence assertions.
 - [x] Document and perform controlled direct read-only Shopify verification for products, discounts, and Manus-channel orders, including its expected baseline and connection boundary.
 - [x] Document remaining Shopify owner actions required to activate real payments, shipping, taxes, and fulfilment before accepting live orders.
 - [ ] Complete the approved hybrid operations model with a substantive read-only orders workspace plus Shopify Admin links for sensitive settings and exceptional actions.
