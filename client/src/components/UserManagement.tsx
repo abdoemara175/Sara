@@ -31,29 +31,29 @@ export function UserManagement({ currentUserId }: { currentUserId: number }) {
   };
 
   return (
-    <section className="mt-8 rounded-3xl border border-stone-200 bg-white p-6">
+    <section className="mt-8 rounded-2xl border border-[#dce6d7] bg-white p-6 shadow-[0_10px_24px_rgb(49_76_50_/_5%)]">
       <div className="flex items-start gap-3">
-        <UserRoundCog className="mt-1 text-[#a76c45]" size={20} />
+        <UserRoundCog className="mt-1 text-[#4f744c]" size={20} />
         <div>
-          <p className="text-[10px] font-black uppercase tracking-[0.16em] text-[#a76c45]">Access control</p>
-          <h2 className="mt-1 font-serif text-2xl font-black">Users & roles</h2>
-          <p className="mt-2 max-w-3xl text-sm leading-6 text-stone-600">Create local customer or administrator accounts. Role and status changes are enforced by server procedures; the last active administrator cannot be removed, disabled, or demoted.</p>
+          <p className="noura-eyebrow">Access control</p>
+          <h2 className="mt-1 text-2xl font-semibold tracking-[-0.04em] text-[#253a28]">Users & roles</h2>
+          <p className="mt-2 max-w-3xl text-sm leading-6 text-[#667567]">Create local customer or administrator accounts. Role and status changes are enforced by server procedures; the last active administrator cannot be removed, disabled, or demoted.</p>
         </div>
       </div>
 
-      <form onSubmit={submit} className="mt-6 grid gap-3 rounded-2xl bg-[#fcfbf8] p-4 md:grid-cols-2">
-        <input value={name} onChange={event => setName(event.target.value)} placeholder="Name (optional)" className="rounded-xl border border-stone-200 bg-white px-3 py-2 text-sm outline-none focus:border-[#a76c45]" />
-        <input value={email} onChange={event => setEmail(event.target.value)} type="email" placeholder="Email" required className="rounded-xl border border-stone-200 bg-white px-3 py-2 text-sm outline-none focus:border-[#a76c45]" />
-        <input value={password} onChange={event => setPassword(event.target.value)} type="password" placeholder="Temporary password" required className="rounded-xl border border-stone-200 bg-white px-3 py-2 text-sm outline-none focus:border-[#a76c45]" />
-        <select value={role} onChange={event => setNewUserRole(event.target.value as "admin" | "user")} className="rounded-xl border border-stone-200 bg-white px-3 py-2 text-sm outline-none focus:border-[#a76c45]"><option value="user">Customer</option><option value="admin">Administrator</option></select>
+      <form onSubmit={submit} className="mt-6 grid gap-3 rounded-xl bg-[#f3f8ef] p-4 md:grid-cols-2">
+        <input value={name} onChange={event => setName(event.target.value)} placeholder="Name (optional)" className="rounded-lg border border-[#dce6d7] bg-white px-3 py-2 text-sm outline-none focus:border-[#6d9867]" />
+        <input value={email} onChange={event => setEmail(event.target.value)} type="email" placeholder="Email" required className="rounded-lg border border-[#dce6d7] bg-white px-3 py-2 text-sm outline-none focus:border-[#6d9867]" />
+        <input value={password} onChange={event => setPassword(event.target.value)} type="password" placeholder="Temporary password" required className="rounded-lg border border-[#dce6d7] bg-white px-3 py-2 text-sm outline-none focus:border-[#6d9867]" />
+        <select value={role} onChange={event => setNewUserRole(event.target.value as "admin" | "user")} className="rounded-lg border border-[#dce6d7] bg-white px-3 py-2 text-sm outline-none focus:border-[#6d9867]"><option value="user">Customer</option><option value="admin">Administrator</option></select>
         {create.error && <p role="alert" className="text-sm text-rose-700 md:col-span-2">{create.error.message}</p>}
-        <button disabled={create.isPending} className="inline-flex items-center justify-center gap-2 rounded-xl bg-stone-900 px-4 py-3 text-xs font-bold text-white transition hover:bg-[#a76c45] disabled:opacity-50 md:col-span-2"><UserPlus size={15} /> Create user</button>
+        <button disabled={create.isPending} className="noura-button-primary inline-flex items-center justify-center gap-2 px-4 py-3 text-xs font-bold disabled:opacity-50 md:col-span-2"><UserPlus size={15} /> Create user</button>
       </form>
 
-      {users.data?.length ? <form onSubmit={submitPasswordReset} className="mt-4 grid gap-3 rounded-2xl border border-stone-200 bg-white p-4 md:grid-cols-[1fr_1fr_auto]">
-        <select aria-label="Choose a user for password reset" value={resetTargetId} onChange={event => setResetTargetId(event.target.value)} required className="rounded-xl border border-stone-200 bg-white px-3 py-2 text-sm outline-none focus:border-[#a76c45]"><option value="">Choose user to reset</option>{users.data.map(member => <option key={member.id} value={member.id}>{member.email || member.name || `User ${member.id}`}</option>)}</select>
-        <input value={resetPasswordValue} onChange={event => setResetPasswordValue(event.target.value)} type="password" placeholder="New temporary password" required className="rounded-xl border border-stone-200 bg-white px-3 py-2 text-sm outline-none focus:border-[#a76c45]" />
-        <button disabled={resetPassword.isPending} className="inline-flex items-center justify-center gap-2 rounded-xl border border-stone-900 px-4 py-3 text-xs font-bold text-stone-900 transition hover:bg-stone-900 hover:text-white disabled:opacity-50"><KeyRound size={15} /> Reset password</button>
+      {users.data?.length ? <form onSubmit={submitPasswordReset} className="mt-4 grid gap-3 rounded-xl border border-[#dce6d7] bg-white p-4 md:grid-cols-[1fr_1fr_auto]">
+        <select aria-label="Choose a user for password reset" value={resetTargetId} onChange={event => setResetTargetId(event.target.value)} required className="rounded-lg border border-[#dce6d7] bg-white px-3 py-2 text-sm outline-none focus:border-[#6d9867]"><option value="">Choose user to reset</option>{users.data.map(member => <option key={member.id} value={member.id}>{member.email || member.name || `User ${member.id}`}</option>)}</select>
+        <input value={resetPasswordValue} onChange={event => setResetPasswordValue(event.target.value)} type="password" placeholder="New temporary password" required className="rounded-lg border border-[#dce6d7] bg-white px-3 py-2 text-sm outline-none focus:border-[#6d9867]" />
+        <button disabled={resetPassword.isPending} className="noura-button-secondary inline-flex items-center justify-center gap-2 px-4 py-3 text-xs font-bold disabled:opacity-50"><KeyRound size={15} /> Reset password</button>
         {resetPassword.error && <p role="alert" className="text-sm text-rose-700 md:col-span-3">{resetPassword.error.message}</p>}
         <p className="text-xs leading-5 text-stone-500 md:col-span-3">The selected member must replace this temporary password before they can use administrator operations.</p>
       </form> : null}
