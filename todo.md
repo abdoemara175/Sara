@@ -124,15 +124,16 @@
 - [x] Complete interface-level verification of Arabic and English storefront search, empty-result recovery, and clearing behavior.
 - [x] Verify that clearing a storefront search query removes its results panel and returns the header to its idle state.
 - [x] Verify Arabic, English, empty-result, and clear/reset behavior on the desktop storefront search surface.
-- [ ] Inspect Shopify payment, order, product, collection, and discount capabilities available to this store before enabling operational actions.
-- [ ] Define role-safe administrator workflows for catalogue creation, classification, pricing, discounts, orders, fulfilment, and customer payment handoff.
+- [x] Inspect Shopify payment, order, product, collection, and discount capabilities available to this store before enabling operational actions.
+- [x] Define role-safe administrator workflows for catalogue creation, classification, pricing, discounts, orders, fulfilment, and customer payment handoff.
 - [ ] Add protected catalogue-management controls for product creation, category assignment, price, compare-at sale price, and publication state.
 - [ ] Add protected discount management and customer-facing promotion behavior without fabricating reviews or promotional claims.
 - [ ] Add a protected orders workspace with order details, payment and fulfilment status, secure Shopify Admin handoff, and recoverable error states.
 - [ ] Validate the end-to-end customer checkout handoff and the administrator catalogue, order, and discount workflows with automated coverage and live non-destructive checks.
-- [ ] Document remaining Shopify owner actions required to activate real payments, shipping, taxes, and fulfilment before accepting live orders.
+- [x] Document remaining Shopify owner actions required to activate real payments, shipping, taxes, and fulfilment before accepting live orders.
 - [ ] Implement the approved hybrid operations model: in-site management workspace plus Shopify Admin fallback links for sensitive settings and exceptional actions.
 - [ ] Obtain and validate a least-privilege Shopify Admin API token and webhook signing secret through secure project settings before enabling live write actions.
+- [x] Add regression coverage for the administrator's product, order, discount, payment, and shipping handoff links.
 - [x] Define a calm botanical skincare visual system inspired by the supplied reference without copying its brand assets or copy.
 - [x] Replace the current NOURA color, typography, button, card, and spacing tokens with the new olive-and-ivory system.
 - [x] Restyle the storefront, product discovery, account, cart, and administrator views while preserving existing commerce and role flows.
