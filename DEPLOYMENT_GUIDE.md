@@ -8,9 +8,9 @@ The current quality gate covers the application build, local authentication life
 
 ## GitHub repository and Pages
 
-The complete source can be synchronized to `abdoemara175/Sara` only after the owner explicitly confirms the final upload. GitHub Pages can host static files but cannot run this application's Express server, database, server-side session checks, or protected Shopify Storefront credential. It must therefore not be presented as the working production storefront.
+The complete source is synchronized to [`abdoemara175/Sara`](https://github.com/abdoemara175/Sara). GitHub Pages can host static files but cannot run this application's Express server, database, server-side session checks, or protected Shopify Storefront credential. It must therefore not be presented as the working production storefront.
 
-If a GitHub Pages site is requested later, it should be a clearly labeled static project preview or documentation page that links to the managed full-stack application. The functional deployment remains the managed application host.
+The published overview is available at [abdoemara175.github.io/Sara](https://abdoemara175.github.io/Sara/). GitHub Pages currently uses the `main` branch repository root; the root `index.html` deliberately redirects to `docs/`, which contains the labeled static project overview and link to the managed full-stack application. The functional deployment remains the managed application host.
 
 ## Post-launch owner checklist
 

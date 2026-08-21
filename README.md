@@ -8,7 +8,7 @@ The fully functional storefront runs at [cosmobeauty-nx34uya9.manus.space](https
 
 ## GitHub Pages
 
-The `docs/` directory contains the GitHub Pages landing page. It is intentionally a static project overview that links visitors to the managed application. It does **not** host the functional checkout, database, authentication, or Shopify server integration.
+The [GitHub Pages overview](https://abdoemara175.github.io/Sara/) is a static project page that links visitors to the managed application. GitHub Pages is configured from the `main` branch repository root; its root `index.html` redirects to the maintained `docs/` overview. It does **not** host the functional checkout, database, authentication, or Shopify server integration.
 
 ## Local development
 
